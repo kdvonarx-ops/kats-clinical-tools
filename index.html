@@ -1,0 +1,1834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PREVENT CVD Risk — Central Health Clinical Tools</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --remedy:#214C52;--remedy-mid:#2d6168;--remedy-dark:#162f33;
+  --harmony:#5FCDBC;--harmony-dark:#3db5a2;--harmony-light:#dff5f2;
+  --gray50:#f5f7f7;--gray100:#edf0f0;--gray200:#d2dcdd;--gray300:#a8bcbf;
+  --text:#1a2830;--text2:#3d5260;--text3:#6b8593;
+  --low-bg:#e8f5f3;--low-text:#144740;--low-border:#3db5a2;
+  --bline-bg:#fef9ec;--bline-text:#7a5400;--bline-border:#f0b429;
+  --int-bg:#fff3e0;--int-text:#7a3d00;--int-border:#e07e00;
+  --high-bg:#fce8e8;--high-text:#7a1a1a;--high-border:#d43030;
+  --nav-h:56px;--r:6px;--rl:10px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;background:var(--gray50);color:var(--text);font-size:14px;line-height:1.55}
+
+/* ── Nav ── */
+nav{position:sticky;top:0;z-index:100;background:var(--remedy);height:var(--nav-h);display:flex;align-items:center;border-bottom:3px solid var(--harmony)}
+.nav-inner{max-width:1040px;margin:0 auto;padding:0 1.5rem;width:100%;display:flex;align-items:center;gap:0}
+.nav-brand{display:flex;align-items:center;gap:10px;text-decoration:none;margin-right:auto}
+.nav-brand-text h1{font-size:14px;font-weight:700;color:#fff;letter-spacing:.01em}
+.nav-brand-text p{font-size:10.5px;color:rgba(255,255,255,.45)}
+.nav-links{display:flex;gap:2px}
+.nav-link{padding:8px 14px;border-radius:var(--r);background:none;border:none;color:rgba(255,255,255,.65);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:all .12s;text-decoration:none}
+.nav-link:hover{background:rgba(255,255,255,.1);color:#fff}
+.nav-link.active{background:rgba(95,205,188,.2);color:var(--harmony)}
+
+/* ── Pages ── */
+.page{display:none;max-width:1040px;margin:0 auto;padding:1.5rem 1.5rem 3rem}
+.page.active{display:block}
+
+/* ══════════════════════════════════════════════
+   CALCULATOR PAGE
+══════════════════════════════════════════════ */
+.calc-layout{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;align-items:start}
+@media(max-width:720px){.calc-layout{grid-template-columns:1fr}}
+
+.card{background:#fff;border:1px solid var(--gray200);border-radius:var(--rl);padding:1.25rem 1.5rem;margin-bottom:.75rem}
+.card:last-child{margin-bottom:0}
+.section-label{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--remedy);margin-bottom:.85rem;display:flex;align-items:center;gap:8px}
+.section-label::after{content:'';flex:1;height:1px;background:var(--gray100)}
+
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.field{display:flex;flex-direction:column;gap:4px}
+.field label{font-size:11.5px;color:var(--text2);font-weight:600}
+.field input,.field select{width:100%;padding:7px 9px;border:1.5px solid var(--gray200);border-radius:var(--r);background:var(--gray50);color:var(--text);font-size:14px;outline:none;transition:border-color .12s,box-shadow .12s;font-family:inherit;-webkit-appearance:none;appearance:none}
+.field input:focus,.field select:focus{border-color:var(--harmony);box-shadow:0 0 0 3px rgba(95,205,188,.18)}
+.field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236b8593' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 9px center;padding-right:26px}
+.field .hint{font-size:10.5px;color:var(--text3)}
+.field-full{grid-column:1/-1}
+
+.toggle-group{display:flex;gap:5px}
+.tb{flex:1;padding:6px 8px;border:1.5px solid var(--gray200);border-radius:var(--r);background:var(--gray50);color:var(--text2);font-size:13px;cursor:pointer;transition:all .12s;font-family:inherit;font-weight:500;text-align:center}
+.tb:hover{background:var(--gray100)}
+.tb.on{background:var(--remedy);color:#fff;border-color:var(--remedy);font-weight:600}
+.divider{border:none;border-top:1px solid var(--gray100);margin:.9rem 0}
+.enhanced-note{display:flex;gap:8px;align-items:flex-start;background:var(--harmony-light);border:1px solid var(--harmony);border-radius:var(--r);padding:.6rem .85rem;margin-bottom:.85rem;font-size:11.5px;color:var(--remedy);line-height:1.55}
+.run-btn{width:100%;padding:11px;background:var(--harmony);color:var(--remedy);border:none;border-radius:var(--r);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:background .12s;margin-top:.85rem;letter-spacing:.01em}
+.run-btn:hover{background:var(--harmony-dark);color:#fff}
+.error-box{margin-top:.6rem;font-size:12px;color:var(--high-text);display:none;padding:7px 10px;background:var(--high-bg);border-radius:var(--r);border-left:3px solid var(--high-border)}
+
+/* Results panel (right column) */
+.results-panel{position:sticky;top:calc(var(--nav-h) + 12px)}
+.results-empty{border:2px dashed var(--gray200);border-radius:var(--rl);padding:3rem 1.5rem;text-align:center;color:var(--text3)}
+.results-empty svg{margin-bottom:10px;opacity:.35}
+.results-empty p{font-size:13px}
+.results-wrap{display:none}
+.results-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.85rem;flex-wrap:wrap;gap:6px}
+.results-header h2{font-size:15px;font-weight:700;color:var(--remedy)}
+.model-badge{font-size:10px;padding:2px 9px;border-radius:20px;background:var(--remedy-light, #e8eff0);color:var(--remedy);border:1px solid rgba(33,76,82,.15);font-weight:600}
+.yr-tabs{display:flex;border-bottom:2px solid var(--gray100);margin-bottom:.9rem}
+.yr-tab{padding:7px 16px;background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;color:var(--text3);cursor:pointer;font-family:inherit;font-size:13px;font-weight:600}
+.yr-tab.active{color:var(--remedy);border-bottom-color:var(--harmony)}
+.metrics-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.metric{border-radius:var(--r);padding:.7rem .85rem;border:1px solid var(--gray100)}
+.metric.low{background:#f0faf8}.metric.borderline{background:#fefbf0}.metric.intermediate{background:#fff6ec}.metric.high{background:#fdf0f0}
+.metric.primary{border-width:2px}.metric.primary.low{border-color:#3db5a2}.metric.primary.borderline{border-color:#f0b429}.metric.primary.intermediate{border-color:#e07e00}.metric.primary.high{border-color:#d43030}
+.m-label{font-size:9px;letter-spacing:.07em;text-transform:uppercase;font-weight:700;color:var(--text3);margin-bottom:3px}
+.m-val{font-size:24px;font-weight:700;line-height:1;margin-bottom:3px}
+.m-val.low{color:#1a7a6e}.m-val.borderline{color:#c47a00}.m-val.intermediate{color:#c05800}.m-val.high{color:#c02020}
+.m-badge{display:inline-block;font-size:9px;font-weight:700;padding:1px 6px;border-radius:20px}
+.m-badge.low{background:var(--low-bg);color:var(--low-text)}.m-badge.borderline{background:var(--bline-bg);color:var(--bline-text)}.m-badge.intermediate{background:var(--int-bg);color:var(--int-text)}.m-badge.high{background:var(--high-bg);color:var(--high-text)}
+.guidance{margin-top:.75rem;padding:.75rem .9rem;border-radius:var(--r);border-left:4px solid;font-size:12px;line-height:1.65}
+.guidance.low{background:var(--low-bg);border-color:var(--low-border);color:var(--low-text)}.guidance.borderline{background:var(--bline-bg);border-color:var(--bline-border);color:var(--bline-text)}.guidance.intermediate{background:var(--int-bg);border-color:var(--int-border);color:var(--int-text)}.guidance.high{background:var(--high-bg);border-color:var(--high-border);color:var(--high-text)}
+.ascvd-note-sm{font-size:10px;color:var(--text3);margin-top:5px}
+.contra-box{background:var(--high-bg);border:1px solid var(--high-border);border-left:4px solid var(--high-border);border-radius:var(--r);padding:.7rem .9rem;margin-top:.75rem;font-size:11.5px;color:var(--high-text);line-height:1.6}
+
+/* ══════════════════════════════════════════════
+   ABOUT PAGE
+══════════════════════════════════════════════ */
+.about-layout{max-width:760px}
+.page-hero{margin-bottom:1.5rem}
+.page-hero h2{font-size:22px;font-weight:700;color:var(--remedy);margin-bottom:.4rem}
+.page-hero p{font-size:14px;color:var(--text2);line-height:1.7;max-width:640px}
+.about-section{margin-bottom:1.5rem}
+.about-section h3{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--remedy);margin-bottom:.65rem;padding-bottom:.4rem;border-bottom:2px solid var(--harmony-light)}
+.about-section p,.about-section li{font-size:13.5px;color:var(--text2);line-height:1.75;margin-bottom:.5rem}
+.about-section ul{padding-left:1.1rem}
+.about-section li{margin-bottom:.25rem}
+.outcome-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:.75rem}
+.outcome-card{background:#fff;border:1px solid var(--gray200);border-top:3px solid var(--harmony);border-radius:var(--rl);padding:.85rem 1rem}
+.outcome-card h4{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--remedy);margin-bottom:.35rem}
+.outcome-card p{font-size:12px;color:var(--text2);line-height:1.55}
+.model-table{width:100%;border-collapse:collapse;font-size:13px;margin-top:.75rem}
+.model-table th{background:var(--remedy);color:#fff;padding:8px 12px;text-align:left;font-size:11px;font-weight:600;letter-spacing:.04em}
+.model-table td{padding:8px 12px;border-bottom:1px solid var(--gray100);color:var(--text2);vertical-align:top}
+.model-table tr:last-child td{border-bottom:none}
+.model-table tr:nth-child(even) td{background:var(--gray50)}
+.pill{display:inline-block;padding:1px 7px;border-radius:20px;font-size:10px;font-weight:700}
+.pill-green{background:var(--harmony-light);color:var(--remedy)}.pill-gray{background:var(--gray100);color:var(--text3)}
+.cite-box{background:#fff;border:1px solid var(--gray200);border-radius:var(--rl);padding:.9rem 1.1rem;font-size:12.5px;color:var(--text2);line-height:1.7}
+.cite-box a{color:var(--harmony-dark)}
+
+/* ══════════════════════════════════════════════
+   EPIC PAGE
+══════════════════════════════════════════════ */
+.epic-layout{max-width:800px}
+.status-bar{display:flex;gap:8px;margin-bottom:1.25rem;flex-wrap:wrap}
+.status-chip{display:flex;align-items:center;gap:6px;padding:5px 12px;border-radius:20px;font-size:12px;font-weight:600;border:1px solid}
+.chip-done{background:#e8f5f3;color:#144740;border-color:#3db5a2}
+.chip-ready{background:#e8f0f5;color:#1a3a52;border-color:#6ba0c0}
+.chip-pending{background:var(--gray100);color:var(--text3);border-color:var(--gray200)}
+.epic-section{margin-bottom:1.5rem}
+.epic-section h3{font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--remedy);margin-bottom:.65rem;padding-bottom:.4rem;border-bottom:2px solid var(--harmony-light)}
+.epic-section p{font-size:13.5px;color:var(--text2);line-height:1.75;margin-bottom:.65rem}
+.code-block{background:#1a2830;border-radius:var(--rl);padding:1rem 1.25rem;margin:.65rem 0;position:relative}
+.code-block code{font-family:'SF Mono','Fira Code',Consolas,monospace;font-size:12.5px;color:#e0edf0;line-height:1.65;white-space:pre-wrap;word-break:break-all;display:block}
+.code-block .code-label{font-size:9.5px;color:rgba(255,255,255,.35);letter-spacing:.07em;text-transform:uppercase;margin-bottom:6px;display:block}
+.copy-btn{position:absolute;top:10px;right:10px;background:rgba(95,205,188,.2);border:1px solid rgba(95,205,188,.3);color:var(--harmony);border-radius:var(--r);padding:3px 9px;font-size:10.5px;cursor:pointer;font-family:inherit;transition:all .12s}
+.copy-btn:hover{background:rgba(95,205,188,.35)}
+.step-list{counter-reset:steps;list-style:none;padding:0}
+.step-list li{counter-increment:steps;display:flex;gap:12px;margin-bottom:.85rem;align-items:flex-start}
+.step-list li::before{content:counter(steps);background:var(--remedy);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+.step-list li p{font-size:13.5px;color:var(--text2);line-height:1.65;margin:0}
+.step-list li strong{color:var(--text)}
+.info-box{background:#fff;border:1px solid var(--gray200);border-left:4px solid var(--harmony);border-radius:var(--r);padding:.75rem 1rem;font-size:12.5px;color:var(--text2);line-height:1.65;margin:.65rem 0}
+.ticket-block{background:#fff;border:1px solid var(--gray200);border-radius:var(--rl);padding:1.1rem 1.25rem;font-size:13px;color:var(--text2);line-height:1.75}
+.ticket-block .tfield{margin-bottom:.65rem}
+.ticket-block .tfield strong{color:var(--remedy);display:block;font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+
+@media(max-width:580px){
+  .outcome-grid{grid-template-columns:1fr}
+  .metrics-grid{grid-template-columns:1fr 1fr}
+  .page,.nav-inner{padding-left:1rem;padding-right:1rem}
+  .nav-link span{display:none}
+  .statin-results-panel{position:static}
+  .results-panel{position:static}
+  .nav-link{padding:8px 9px;font-size:12px}
+}
+@media(max-width:400px){
+  .nav-link{padding:7px 6px;font-size:11px}
+}
+
+
+/* Biomarker screening section */
+.biomarker-section{margin-top:.85rem}
+.biomarker-card{background:#fff;border:1px solid var(--gray200);border-radius:var(--rl);overflow:hidden}
+.biomarker-header{padding:.6rem 1rem;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:8px;background:var(--gray50);border-bottom:1px solid var(--gray100);color:var(--remedy)}
+.biomarker-body{padding:.85rem 1rem;font-size:13px;color:var(--text2);line-height:1.7}
+.biomarker-body p{margin-bottom:.4rem}
+.biomarker-body p:last-child{margin-bottom:0}
+.lpa-elevated{background:#fce8e8;border-left:4px solid #d43030;border-radius:var(--r);padding:.6rem .85rem;font-size:12.5px;color:#7a1a1a;line-height:1.65;margin-top:.5rem}
+.lpa-normal{background:#e8f5f3;border-left:4px solid #3db5a2;border-radius:var(--r);padding:.6rem .85rem;font-size:12.5px;color:#144740;line-height:1.65;margin-top:.5rem}
+.lpa-screen{background:#fff3e0;border-left:4px solid #e07e00;border-radius:var(--r);padding:.6rem .85rem;font-size:12.5px;color:#7a3d00;line-height:1.65;margin-top:.5rem}
+.apob-indicated{background:#f0eafa;border-left:4px solid #9b60e0;border-radius:var(--r);padding:.6rem .85rem;font-size:12.5px;color:#3d1a7a;line-height:1.65;margin-top:.5rem}
+.apob-na{background:var(--gray50);border-left:4px solid var(--gray300);border-radius:var(--r);padding:.6rem .85rem;font-size:12px;color:var(--text3);line-height:1.6;margin-top:.5rem}
+
+/* ══════════════════════════════════════════════
+   STATIN CHOOSER PAGE
+══════════════════════════════════════════════ */
+.statin-layout{max-width:900px;margin:0 auto}
+.statin-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;align-items:start}
+@media(max-width:680px){.statin-grid{grid-template-columns:1fr}}
+.statin-results-panel{position:sticky;top:calc(var(--nav-h)+12px)}
+.pathway-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;font-size:11px;font-weight:700;margin-bottom:.75rem}
+.pb-primary{background:#e8f5f3;color:#144740;border:1px solid #3db5a2}
+.pb-secondary{background:#fce8e8;color:#7a1a1a;border:1px solid #d43030}
+.pb-fh{background:#f0eafa;color:#3d1a7a;border:1px solid #9b60e0}
+.pb-severe{background:#fff3e0;color:#7a3d00;border:1px solid #e07e00}
+.pb-dm{background:#e8f0fa;color:#1a3a7a;border:1px solid #4a7ac8}
+.rec-block{background:#fff;border:1px solid var(--gray200);border-radius:var(--rl);overflow:hidden;margin-bottom:.75rem}
+.rec-header{padding:.75rem 1rem;font-size:12px;font-weight:700;letter-spacing:.02em;display:flex;align-items:center;gap:8px}
+.rec-header.intensity-high{background:#fce8e8;color:#7a1a1a;border-bottom:1px solid #f0c8c8}
+.rec-header.intensity-mod{background:#fff3e0;color:#7a3d00;border-bottom:1px solid #ffe0b2}
+.rec-header.intensity-low{background:#e8f5f3;color:#144740;border-bottom:1px solid #b2dfdb}
+.rec-header.intensity-none{background:var(--gray100);color:var(--text2);border-bottom:1px solid var(--gray200)}
+.rec-body{padding:.85rem 1rem;font-size:13px;color:var(--text2);line-height:1.7}
+.rec-body .drug-list{list-style:none;padding:0;margin:.5rem 0;display:flex;flex-wrap:wrap;gap:6px}
+.rec-body .drug-list li{background:var(--gray50);border:1px solid var(--gray200);border-radius:var(--r);padding:3px 9px;font-size:12px;font-family:'SF Mono','Fira Code',Consolas,monospace}
+.rec-body .drug-list li.preferred{background:#e8f5f3;border-color:#3db5a2;color:#144740;font-weight:600}
+.ldl-target-box{display:flex;align-items:center;gap:10px;background:var(--harmony-light);border:1px solid var(--harmony);border-radius:var(--r);padding:.65rem .9rem;margin:.5rem 0}
+.ldl-target-val{font-size:22px;font-weight:800;color:var(--remedy)}
+.ldl-target-label{font-size:11.5px;color:var(--remedy);line-height:1.4}
+.escalation-ladder{margin:.6rem 0}
+.ladder-step{display:flex;align-items:flex-start;gap:10px;padding:.5rem 0;border-bottom:1px solid var(--gray100)}
+.ladder-step:last-child{border-bottom:none}
+.ladder-num{background:var(--remedy);color:#fff;border-radius:50%;width:20px;height:20px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;margin-top:1px}
+.ladder-step p{font-size:12.5px;color:var(--text2);line-height:1.6;margin:0}
+.caution-box{background:#fffbf0;border:1px solid #f0c020;border-left:4px solid #f0c020;border-radius:var(--r);padding:.65rem .9rem;font-size:12px;color:#7a5a00;line-height:1.6;margin-top:.6rem}
+.contra-flag{background:var(--high-bg);border:1px solid var(--high-border);border-left:4px solid var(--high-border);border-radius:var(--r);padding:.65rem .9rem;font-size:12px;color:var(--high-text);line-height:1.6;margin-top:.6rem}
+.statin-empty{border:2px dashed var(--gray200);border-radius:var(--rl);padding:3rem 1.5rem;text-align:center;color:var(--text3)}
+.statin-empty p{font-size:13px;margin-top:10px}
+.import-banner{background:var(--harmony-light);border:1px solid var(--harmony);border-radius:var(--r);padding:.6rem .9rem;font-size:12px;color:var(--remedy);display:flex;align-items:center;gap:8px;margin-bottom:.85rem;cursor:pointer;transition:background .12s}
+.import-banner:hover{background:#c8ede9}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-brand" href="#" onclick="showPage('calc');return false">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="5" fill="rgba(95,205,188,0.25)"/><text x="4" y="20" font-family="Helvetica Neue,Helvetica,Arial,sans-serif" font-weight="800" font-size="15" fill="white">CH</text></svg>
+      <div class="nav-brand-text">
+        <h1>PREVENT Calculator</h1>
+        <p>Central Health · Clinical Decision Support</p>
+      </div>
+    </a>
+    <div class="nav-links">
+      <button class="nav-link active" id="nav-calc" onclick="showPage('calc')">Calculator</button>
+      <button class="nav-link" id="nav-statin" onclick="showPage('statin')">Statin Chooser</button>
+      <button class="nav-link" id="nav-about" onclick="showPage('about')">About</button>
+      <button class="nav-link" id="nav-epic" onclick="showPage('epic')">Epic Integration</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════════════ CALCULATOR PAGE ══════════════════════ -->
+<div class="page active" id="page-calc">
+  <div class="calc-layout" style="padding-top:1.25rem;max-width:1040px;margin:0 auto;padding-left:1.5rem;padding-right:1.5rem;padding-bottom:3rem">
+
+    <!-- Left: inputs -->
+    <div>
+      <div class="card">
+        <div class="enhanced-note">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" style="flex-shrink:0;margin-top:1px"><circle cx="7" cy="7" r="6.5" stroke="#214C52" stroke-width="1.1"/><path d="M7 4.5v3M7 9v.5" stroke="#214C52" stroke-width="1.4" stroke-linecap="round"/></svg>
+          <span><strong>Enhanced model:</strong> HbA1c, UACR, and/or ZIP automatically select the most accurate model variant. All optional.</span>
+        </div>
+
+        <div class="section-label">Patient details</div>
+        <div class="input-grid">
+          <div class="field"><label>Age (30–79 yrs)</label><input type="number" id="age" min="30" max="79" value="55" step="1"></div>
+          <div class="field"><label>Sex</label><select id="sex"><option value="female">Female</option><option value="male">Male</option></select></div>
+          <div class="field"><label>SBP (mm Hg)</label><input type="number" id="sbp" min="90" max="200" value="125" step="1"></div>
+          <div class="field"><label>eGFR (mL/min/1.73m²)</label><input type="number" id="egfr" min="15" max="140" value="90" step="1"></div>
+          <div class="field"><label>Total cholesterol (mg/dL)</label><input type="number" id="tc" min="100" max="400" value="190" step="1"></div>
+          <div class="field"><label>HDL-C (mg/dL)</label><input type="number" id="hdl" min="20" max="100" value="50" step="1"></div>
+          <div class="field field-full"><label>BMI (kg/m²)</label><input type="number" id="bmi" min="15" max="60" value="27" step="0.1"></div>
+        </div>
+
+        <hr class="divider">
+        <div class="section-label">Risk factors</div>
+        <div class="input-grid">
+          <div class="field"><label>BP treatment</label>
+            <div class="toggle-group" id="grp_bp"><button class="tb on" data-v="0" onclick="tog('grp_bp',this)">No</button><button class="tb" data-v="1" onclick="tog('grp_bp',this)">Yes</button></div>
+          </div>
+          <div class="field"><label>Statin use</label>
+            <div class="toggle-group" id="grp_st"><button class="tb on" data-v="0" onclick="tog('grp_st',this)">No</button><button class="tb" data-v="1" onclick="tog('grp_st',this)">Yes</button></div>
+          </div>
+          <div class="field"><label>Diabetes</label>
+            <div class="toggle-group" id="grp_dm"><button class="tb on" data-v="0" onclick="tog('grp_dm',this)">No</button><button class="tb" data-v="1" onclick="tog('grp_dm',this)">Yes</button></div>
+          </div>
+          <div class="field"><label>Current smoker</label>
+            <div class="toggle-group" id="grp_sm"><button class="tb on" data-v="0" onclick="tog('grp_sm',this)">No</button><button class="tb" data-v="1" onclick="tog('grp_sm',this)">Yes</button></div>
+          </div>
+        </div>
+
+        <hr class="divider">
+        <div class="section-label">Optional enhanced predictors</div>
+        <div class="input-grid">
+          <div class="field"><label>HbA1c (%)</label><input type="number" id="hba1c" min="4" max="16" step="0.1" placeholder="e.g. 7.5"><span class="hint">Enables HbA1c model</span></div>
+          <div class="field"><label>UACR (mg/g)</label><input type="number" id="uacr" min="0.1" max="25000" step="1" placeholder="e.g. 150"><span class="hint">Enables UACR model</span></div>
+          <div class="field field-full"><label>ZIP code</label><input type="text" id="zip" maxlength="5" placeholder="e.g. 78701"><span class="hint">Estimates Social Deprivation Index (SDI)</span></div>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:.85rem">
+          <button class="run-btn" style="margin-top:0;flex:1" onclick="calc()">Calculate PREVENT Risk</button>
+          <button id="reset-btn" onclick="resetCalc()" style="padding:11px 16px;background:var(--gray100);color:var(--text2);border:1.5px solid var(--gray200);border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;transition:all .12s;white-space:nowrap;display:none" onmouseover="this.style.background='var(--gray200)'" onmouseout="this.style.background='var(--gray100)'">↺ New patient</button>
+        </div>
+        <div class="error-box" id="errbox"></div>
+      </div>
+    </div>
+
+    <!-- Right: results -->
+    <div class="results-panel">
+      <div class="results-empty" id="results-empty">
+        <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="18" stroke="#d2dcdd" stroke-width="2"/><path d="M20 12v9M20 24v2" stroke="#d2dcdd" stroke-width="2.5" stroke-linecap="round"/></svg>
+        <p>Enter patient values and click<br><strong>Calculate PREVENT Risk</strong></p>
+      </div>
+      <div class="results-wrap" id="results">
+        <div class="card" style="margin-bottom:.75rem">
+          <div class="results-header">
+            <h2>Risk Estimates</h2>
+            <span class="model-badge" id="model-badge">Base model · offline</span>
+          </div>
+          <div class="yr-tabs">
+            <button class="yr-tab active" id="tab10" onclick="showYr('10')">10-year</button>
+            <button class="yr-tab" id="tab30" onclick="showYr('30')">30-year</button>
+          </div>
+          <div id="panel10">
+            <div class="metrics-grid" id="grid10"></div>
+            <div id="guide10"></div>
+            <p class="ascvd-note-sm">ASCVD is primary metric for statin decisions (2026 ACC/AHA). Statin initiation recommended at ≥3% 10-yr ASCVD.</p>
+          </div>
+          <div id="panel30" style="display:none">
+            <div class="metrics-grid" id="grid30"></div>
+            <div id="guide30"></div>
+          </div>
+          <!-- Statin chooser CTA -->
+          <div id="statin-cta" style="margin-top:.85rem;background:var(--remedy);border-radius:var(--r);padding:.75rem 1rem;display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer" onclick="showPage('statin')">
+            <div>
+              <div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--harmony);margin-bottom:2px">Next step</div>
+              <div id="statin-cta-text" style="font-size:13px;font-weight:600;color:white">Get statin intensity &amp; LDL-C target → Statin Chooser</div>
+            </div>
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" style="flex-shrink:0"><circle cx="11" cy="11" r="10.5" stroke="#5FCDBC" stroke-width="1.2"/><path d="M9 7l4 4-4 4" stroke="#5FCDBC" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+        <div class="contra-box">
+          <strong>⚠ Contraindicated in:</strong> known CVD · LVEF &lt;40% or CAC ≥300 · pathogenic genetic variant · end-stage kidney disease · life expectancy &lt;1 year
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════ ABOUT PAGE ══════════════════════ -->
+<div class="page" id="page-about">
+  <div class="about-layout" style="max-width:800px;margin:0 auto;padding:1.5rem 1.5rem 3rem">
+
+    <div class="page-hero">
+      <h2>About This Tool</h2>
+      <p>The Central Health CVD Risk &amp; Lipid Management tool combines two evidence-based clinical decision aids — the AHA PREVENT risk calculator and the 2026 ACC/AHA Statin Chooser — into a single offline, Epic-ready resource for primary and secondary cardiovascular prevention.</p>
+    </div>
+
+    <!-- ── DIVIDER ── -->
+    <div style="display:flex;align-items:center;gap:10px;margin:1.25rem 0 1rem">
+      <div style="width:4px;height:28px;background:var(--harmony);border-radius:2px;flex-shrink:0"></div>
+      <h2 style="font-size:17px;font-weight:700;color:var(--remedy)">Part 1 — AHA PREVENT Risk Calculator</h2>
+    </div>
+
+    <div class="about-section">
+      <h3>What PREVENT Is</h3>
+      <p>The AHA Predicting Risk of CVD EVENTs (PREVENT) equations are a validated, race-free tool for estimating 10-year and 30-year cardiovascular risk in US adults aged 30–79 without known CVD. Developed from 3.28 million participants across 25 diverse US datasets (1992–2017), PREVENT replaces the 2013 Pooled Cohort Equations (PCEs) as the preferred risk tool per the 2026 ACC/AHA Dyslipidemia Guideline.</p>
+      <div class="outcome-grid">
+        <div class="outcome-card"><h4>Total CVD</h4><p>Atherosclerotic CVD plus new-onset heart failure combined. Best overall cardiovascular burden estimate.</p></div>
+        <div class="outcome-card"><h4>ASCVD</h4><p>Coronary heart disease and stroke from arterial plaque. <strong>Primary metric</strong> for statin therapy decisions.</p></div>
+        <div class="outcome-card"><h4>Heart Failure</h4><p>New-onset HF risk. Predicted separately for the first time in PREVENT — driven by HTN, diabetes, obesity, and CKD.</p></div>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <h3>Key Advances Over the Pooled Cohort Equations</h3>
+      <table class="model-table">
+        <thead><tr><th>Feature</th><th>PCEs (2013)</th><th>PREVENT (2024)</th></tr></thead>
+        <tbody>
+          <tr><td>Age range</td><td>40–79 years</td><td>30–79 years</td></tr>
+          <tr><td>Race in model</td><td>Yes — separate White/Black equations</td><td>No — race-free, reduces structural bias</td></tr>
+          <tr><td>Heart failure</td><td>Not predicted</td><td>Predicted separately</td></tr>
+          <tr><td>Kidney function</td><td>Not included</td><td>eGFR as standard predictor</td></tr>
+          <tr><td>Competing risk</td><td>Not adjusted</td><td>Adjusted for non-CVD death</td></tr>
+          <tr><td>Derivation sample</td><td>~24,000</td><td>3.28 million</td></tr>
+          <tr><td>Enhanced predictors</td><td>None</td><td>HbA1c, UACR, SDI available</td></tr>
+          <tr><td>Calibration vs. PCE</td><td>Overestimates risk by 40–50%</td><td>Well-calibrated in validation</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="about-section">
+      <h3>PREVENT Model Variants</h3>
+      <table class="model-table">
+        <thead><tr><th>Model</th><th>Additional Predictor</th><th>When to Use</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Base</strong></td><td>None beyond core variables</td><td>Default; use when HbA1c, UACR, ZIP unavailable</td></tr>
+          <tr><td><strong>+ HbA1c</strong></td><td>Glycated hemoglobin (%)</td><td>Diabetes or prediabetes workup; widely available in Epic</td></tr>
+          <tr><td><strong>+ UACR</strong></td><td>Urine albumin-creatinine ratio</td><td>CKD and diabetes patients; highest incremental value with albuminuria</td></tr>
+          <tr><td><strong>+ SDI</strong></td><td>Social Deprivation Index (via ZIP)</td><td>Captures socioeconomic risk; central to Central Health's equity mission</td></tr>
+          <tr><td><strong>Full</strong></td><td>HbA1c + UACR + SDI</td><td>Most accurate variant when all three are available</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="about-section">
+      <h3>10-Year ASCVD Risk Categories (2026 ACC/AHA)</h3>
+      <table class="model-table">
+        <thead><tr><th>10-yr ASCVD</th><th>Category</th><th>Guideline Action</th></tr></thead>
+        <tbody>
+          <tr><td>&lt;3%</td><td>Very Low</td><td>Lifestyle counseling; statin not indicated</td></tr>
+          <tr><td>3–&lt;5%</td><td>Borderline</td><td>Consider statin if risk-enhancing factors present; target ≥30% LDL-C reduction</td></tr>
+          <tr><td>5–&lt;10%</td><td>Intermediate</td><td>Moderate- to high-intensity statin; consider CAC if decision uncertain; target LDL-C &lt;100 mg/dL</td></tr>
+          <tr><td>≥10%</td><td>High</td><td>High-intensity statin; target ≥50% LDL-C reduction; goal LDL-C &lt;70 mg/dL</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:.6rem;font-size:12.5px;color:var(--text3)">Statin initiation may be considered at ≥3% 10-yr ASCVD per 2026 ACC/AHA. The 2026 guideline notably shifts the borderline threshold from 5% (2018) down to 3%, reflecting improved calibration of PREVENT versus the PCEs.</p>
+    </div>
+
+    <div class="about-section">
+      <h3>Equation Implementation &amp; Validation</h3>
+      <ul>
+        <li>Uses the <strong>simplified logistic regression approximation</strong> published in the Khan et al. 2024 supplemental materials — not the full Cox competing-risks model, but R² &gt;0.99 against it</li>
+        <li><strong>10-year equations:</strong> Supplemental Table S24, verified against worked example in Table S25</li>
+        <li><strong>30-year equations:</strong> Tables S12F–J (base, UACR, HbA1c, SDI, Full variants)</li>
+        <li>Formula: <em>Risk = exp(log-odds) / (1 + exp(log-odds))</em> — logistic function applied to the linear predictor</li>
+        <li>Cholesterol converted internally from mg/dL to mmol/L (×0.02586); eGFR entered directly</li>
+        <li><strong>Verified against the AHA online calculator</strong> for all three supplemental reference cases — results match to within 0.1 percentage point across all 18 risk estimates</li>
+        <li>Runs entirely client-side — no patient data transmitted</li>
+      </ul>
+    </div>
+
+    <div class="about-section">
+      <h3>PREVENT Limitations</h3>
+      <ul>
+        <li><strong>Primary prevention only</strong> — contraindicated in known CVD, LVEF &lt;40%, CAC ≥300, pathogenic genetic variant, ESKD, or life expectancy &lt;1 year</li>
+        <li>May underestimate risk in <strong>American Indians</strong>, some <strong>South Asians</strong>, and some <strong>Puerto Ricans</strong></li>
+        <li>SDI uses a Central Health–specific ZIP lookup table; may not reflect current national SDI values for all ZIP codes</li>
+      </ul>
+    </div>
+
+    <!-- ── DIVIDER ── -->
+    <div style="display:flex;align-items:center;gap:10px;margin:1.5rem 0 1rem">
+      <div style="width:4px;height:28px;background:var(--harmony);border-radius:2px;flex-shrink:0"></div>
+      <h2 style="font-size:17px;font-weight:700;color:var(--remedy)">Part 2 — Statin Chooser</h2>
+    </div>
+
+    <div class="about-section">
+      <h3>What the Statin Chooser Does</h3>
+      <p>The Statin Chooser translates the 2026 ACC/AHA/Multisociety Dyslipidemia Guideline into a structured treatment recommendation. It covers five clinical pathways, determines statin intensity and LDL-C target, and generates a stepwise escalation plan including ezetimibe and PCSK9 inhibitor thresholds — all with safety flags for statin intolerance, pregnancy, liver disease, CKD, and drug interactions.</p>
+    </div>
+
+    <div class="about-section">
+      <h3>2026 Guideline — Key Changes from 2018</h3>
+      <table class="model-table">
+        <thead><tr><th>Topic</th><th>2018 Guideline</th><th>2026 Guideline</th></tr></thead>
+        <tbody>
+          <tr><td>Risk calculator</td><td>Pooled Cohort Equations</td><td><strong>PREVENT equations</strong> (preferred)</td></tr>
+          <tr><td>LDL-C targets</td><td>Intensity-focused; targets de-emphasised</td><td><strong>Explicit LDL-C targets restored</strong></td></tr>
+          <tr><td>Primary prevention threshold</td><td>≥7.5% 10-yr ASCVD for statin</td><td><strong>≥3%</strong> may consider; <strong>≥5%</strong> should consider</td></tr>
+          <tr><td>Bempedoic acid</td><td>Not included</td><td>Added as non-statin option (CLEAR OUTCOMES)</td></tr>
+          <tr><td>Inclisiran</td><td>Not included</td><td>Mentioned; outcomes data pending</td></tr>
+          <tr><td>Lp(a) screening</td><td>Selective</td><td><strong>Universal one-time screening</strong> recommended</td></tr>
+          <tr><td>Strategy framing</td><td>Intensity-based</td><td><strong>"Earlier and lower for longer"</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="about-section">
+      <h3>Clinical Pathways &amp; LDL-C Targets</h3>
+      <table class="model-table">
+        <thead><tr><th>Pathway</th><th>Statin Intensity</th><th>LDL-C Target</th><th>Next Step if Not at Goal</th></tr></thead>
+        <tbody>
+          <tr><td>Primary — Very Low (&lt;3%)</td><td>Not indicated</td><td>—</td><td>Reassess annually</td></tr>
+          <tr><td>Primary — Borderline (3–&lt;5%)</td><td>Consider low–moderate</td><td>&lt;100 mg/dL</td><td>Reassess with risk enhancers; CAC if uncertain</td></tr>
+          <tr><td>Primary — Intermediate (5–&lt;10%)</td><td>Moderate</td><td>&lt;100 mg/dL</td><td>Add ezetimibe</td></tr>
+          <tr><td>Primary — High (≥10%)</td><td>High</td><td>&lt;70 mg/dL</td><td>Add ezetimibe → PCSK9 inhibitor</td></tr>
+          <tr><td>Secondary — Not very high risk</td><td>High</td><td>&lt;70 mg/dL</td><td>Add ezetimibe → PCSK9 inhibitor</td></tr>
+          <tr><td>Secondary — Very high risk</td><td>High</td><td>&lt;55 mg/dL</td><td>Add ezetimibe → PCSK9 inhibitor</td></tr>
+          <tr><td>HeFH (no ASCVD)</td><td>High + ezetimibe</td><td>&lt;100 mg/dL (≥50% reduction)</td><td>Add PCSK9 inhibitor</td></tr>
+          <tr><td>HeFH + ASCVD</td><td>High + ezetimibe</td><td>&lt;55 mg/dL</td><td>Add PCSK9 inhibitor</td></tr>
+          <tr><td>HoFH</td><td>High + ezetimibe + multimodal</td><td>&lt;70 mg/dL</td><td>PCSK9i + bempedoic acid + apheresis referral</td></tr>
+          <tr><td>Severe (LDL-C ≥190, no FH Dx)</td><td>High</td><td>&lt;100 mg/dL (≥50% reduction)</td><td>Add ezetimibe → PCSK9 inhibitor; evaluate for FH</td></tr>
+          <tr><td>Diabetes (age 40–75, ≥1 RF)</td><td>Moderate</td><td>&lt;100 mg/dL</td><td>High-intensity if 10-yr ASCVD ≥10%</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="about-section">
+      <h3>Very High Risk Definition (Secondary Prevention)</h3>
+      <p>Very high risk requires either <strong>multiple major ASCVD events</strong>, or <strong>one major event plus ≥2 high-risk conditions</strong>.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:.5rem">
+        <div style="background:#fff;border:1px solid var(--gray200);border-radius:var(--r);padding:.75rem 1rem">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--remedy);margin-bottom:.4rem">Major ASCVD Events</div>
+          <ul style="font-size:12.5px;color:var(--text2);padding-left:1rem;line-height:1.8">
+            <li>ACS within past 12 months</li>
+            <li>Prior MI (other than above)</li>
+            <li>Prior ischemic stroke</li>
+            <li>Symptomatic PAD</li>
+          </ul>
+        </div>
+        <div style="background:#fff;border:1px solid var(--gray200);border-radius:var(--r);padding:.75rem 1rem">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--remedy);margin-bottom:.4rem">High-Risk Conditions</div>
+          <ul style="font-size:12.5px;color:var(--text2);padding-left:1rem;line-height:1.8">
+            <li>Age &gt;65 years</li>
+            <li>Prior coronary revascularization</li>
+            <li>Current smoking</li>
+            <li>Diabetes mellitus</li>
+            <li>History of heart failure</li>
+            <li>Hypertension</li>
+            <li>LDL-C &gt;100 mg/dL despite max statin + ezetimibe</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <h3>Non-Statin Escalation Hierarchy</h3>
+      <table class="model-table">
+        <thead><tr><th>Agent</th><th>LDL-C Reduction</th><th>Evidence Base</th><th>Role per 2026 Guideline</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Ezetimibe 10 mg</strong></td><td>~18–20% additional</td><td>IMPROVE-IT (CV outcomes benefit)</td><td>First add-on to statin when LDL-C above target</td></tr>
+          <tr><td><strong>PCSK9 mAb</strong> (evolocumab, alirocumab)</td><td>~60% additional</td><td>FOURIER, ODYSSEY OUTCOMES</td><td>Second add-on when LDL-C above target on statin + ezetimibe</td></tr>
+          <tr><td><strong>Bempedoic acid</strong></td><td>~18–20%</td><td>CLEAR OUTCOMES</td><td>Statin-intolerant patients as alternative; CV outcomes shown</td></tr>
+          <tr><td><strong>Inclisiran</strong></td><td>~50%</td><td>CV outcomes trials ongoing</td><td>Consider in statin intolerance if PCSK9 mAb unavailable/not tolerated</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── DIVIDER ── -->
+    <div style="display:flex;align-items:center;gap:10px;margin:1.5rem 0 1rem">
+      <div style="width:4px;height:28px;background:var(--harmony);border-radius:2px;flex-shrink:0"></div>
+      <h2 style="font-size:17px;font-weight:700;color:var(--remedy)">Part 3 — Lp(a) &amp; ApoB Screening</h2>
+    </div>
+
+    <div class="about-section">
+      <h3>Lipoprotein(a) — Lp(a)</h3>
+      <p>Lp(a) is an independent, genetically-determined cardiovascular risk factor not captured by standard lipid panels. The 2026 ACC/AHA guideline recommends <strong>universal one-time Lp(a) measurement</strong> for all adults — it does not need to be repeated as levels are stable over a lifetime.</p>
+      <ul>
+        <li><strong>Elevated threshold:</strong> ≥125 nmol/L or ≥50 mg/dL</li>
+        <li><strong>Prevalence:</strong> ~20% of the general population has elevated Lp(a)</li>
+        <li><strong>Clinical impact:</strong> Elevated Lp(a) is a risk enhancer that supports more aggressive LDL-C lowering. In secondary prevention patients not at LDL-C goal on max statin + ezetimibe, add a PCSK9 inhibitor — which also reduces Lp(a) by ~25%</li>
+        <li><strong>Lp(a)-specific therapies:</strong> No FDA-approved Lp(a)-specific agents currently available in the US; RNA-targeted therapies (olpasiran, pelacarsen) in late-stage trials</li>
+      </ul>
+    </div>
+
+    <div class="about-section">
+      <h3>Apolipoprotein B — ApoB</h3>
+      <p>ApoB reflects total atherogenic particle number and can be more informative than LDL-C in certain clinical scenarios — particularly when LDL-C may underestimate true risk. Per Central Health protocol, ApoB is <strong>not a routine order for primary care</strong> given cost; it should be ordered in consultation with cardiology when clinically indicated.</p>
+      <p><strong>Clinically indicated when:</strong></p>
+      <ul>
+        <li>Triglycerides ≥150 mg/dL — LDL-C underestimates atherogenic particle burden</li>
+        <li>Diabetes or metabolic syndrome — increased small dense LDL particles</li>
+        <li>Borderline/intermediate primary prevention risk — helps clarify statin decision when LDL-C alone is uncertain</li>
+        <li>Low LDL-C (&lt;70 mg/dL) in a high-risk patient — confirms adequate particle reduction on therapy</li>
+        <li>FH or severe hypercholesterolemia — confirms therapy response</li>
+      </ul>
+      <p><strong>Targets (2026 ACC/AHA):</strong> &lt;80 mg/dL in high-risk patients; &lt;65 mg/dL in very high-risk patients.</p>
+    </div>
+
+    <!-- ── DIVIDER ── -->
+    <div style="display:flex;align-items:center;gap:10px;margin:1.5rem 0 1rem">
+      <div style="width:4px;height:28px;background:var(--harmony);border-radius:2px;flex-shrink:0"></div>
+      <h2 style="font-size:17px;font-weight:700;color:var(--remedy)">General Limitations &amp; Disclosures</h2>
+    </div>
+
+    <div class="about-section">
+      <h3>Limitations</h3>
+      <ul>
+        <li>Clinical decision support only — does not replace clinical judgment or patient-clinician shared decision-making</li>
+        <li>PREVENT is validated for primary prevention in adults aged 30–79 without known CVD, severe subclinical CVD, ESKD, or limited life expectancy</li>
+        <li>PREVENT may underestimate risk in American Indians, some South Asians, and some Puerto Ricans</li>
+        <li>Statin Chooser logic reflects published guideline text; individual patient factors (drug interactions, comorbidities, patient preference) must always be considered</li>
+        <li>SDI lookup uses a Central Health–specific ZIP table; may not reflect current national values for all ZIP codes</li>
+        <li>This tool is not a substitute for a formal lipid clinic or cardiology consultation in complex cases</li>
+      </ul>
+    </div>
+
+    <div class="about-section">
+      <h3>References</h3>
+      <div class="cite-box">
+        <strong>PREVENT Equations:</strong><br>
+        Khan SS, Matsushita K, Sang Y, et al. Development and Validation of the American Heart Association's PREVENT Equations. <em>Circulation.</em> 2024;149(6):430–449. doi: <a href="https://doi.org/10.1161/CIRCULATIONAHA.123.067626" target="_blank">10.1161/CIRCULATIONAHA.123.067626</a>
+        <br><br>
+        <strong>2026 Dyslipidemia Guideline:</strong><br>
+        2026 ACC/AHA/AACVPR/ABC/ACPM/ADA/AGS/APhA/ASPC/NLA/PCNA Guideline on the Management of Dyslipidemia. <em>JACC</em> / <em>Circulation,</em> March 13, 2026. doi: <a href="https://doi.org/10.1016/j.jacc.2025.11.016" target="_blank">10.1016/j.jacc.2025.11.016</a>
+        <br><br>
+        <strong>Key trials referenced:</strong><br>
+        IMPROVE-IT (ezetimibe) · FOURIER (evolocumab) · ODYSSEY OUTCOMES (alirocumab) · CLEAR OUTCOMES (bempedoic acid) · REDUCE-IT (icosapent ethyl)
+        <br><br>
+        AHA PREVENT Online Calculator: <a href="https://professional.heart.org/en/guidelines-and-statements/prevent-calculator" target="_blank">professional.heart.org</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════ EPIC PAGE ══════════════════════ -->
+<div class="page" id="page-epic">
+  <div class="epic-layout" style="max-width:800px;margin:0 auto;padding:1.5rem 1.5rem 3rem">
+
+    <div class="page-hero" style="margin-bottom:1.25rem">
+      <h2>Epic Integration</h2>
+      <p>Implementation roadmap and ready-to-use build artifacts for deploying the PREVENT calculator within Central Health's Epic environment.</p>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-chip chip-done">
+        <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#3db5a2"/><path d="M3 5l1.5 1.5L7 3.5" stroke="white" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Calculator validated
+      </div>
+      <div class="status-chip chip-ready">
+        <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#6ba0c0"/><path d="M5 3v2.5L6.5 7" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>
+        SmartLink ready
+      </div>
+      <div class="status-chip chip-pending">
+        <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="4.5" fill="#b0bec7"/></svg>
+        SMART on FHIR — planned
+      </div>
+    </div>
+
+    <!-- Phase 1 -->
+    <div class="epic-section">
+      <h3>Phase 1 — Dot Phrase Links (Immediate, No IT Required)</h3>
+      <p>The fastest path. Dot phrases insert direct links to both tools into any note. No IT ticket needed — any clinician can create these in SmartPhrase Manager.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:.85rem">
+        <div class="code-block" style="margin:0">
+          <span class="code-label">PREVENT Calculator link — .PREVENTCVD</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <code>AHA PREVENT CVD Risk Calculator (primary prevention, ages 30-79):
+https://professional.heart.org/en/guidelines-and-statements/prevent-calculator
+
+Ages 30–79 · Race-free · Outputs: 10-yr &amp; 30-yr CVD, ASCVD, HF risk
+2026 thresholds: &lt;3% Very Low | 3-5% Borderline | 5-10% Intermediate | ≥10% High
+Contraindicated: known CVD, LVEF&lt;40%, CAC≥300, ESKD, life expectancy &lt;1yr</code>
+        </div>
+        <div class="code-block" style="margin:0">
+          <span class="code-label">Statin Chooser link — .STATINCHOICE</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <code>ACC/AHA Statin Chooser (2026 Dyslipidemia Guideline):
+[INTERNAL URL — see Phase 1b]
+
+Pathways: Primary · Secondary · FH · Severe (LDL-C ≥190)
+Outputs: Statin intensity · LDL-C target · Ezetimibe/PCSK9i escalation
+Source: 2026 ACC/AHA Dyslipidemia Guideline, March 13 2026</code>
+        </div>
+      </div>
+    </div>
+
+    <!-- Phase 1b -->
+    <div class="epic-section">
+      <h3>Phase 1b — Hosting the Offline Tool (Low IT lift)</h3>
+      <p>Host the single HTML file on Central Health's intranet so it works even when external URLs are blocked — and sets up Phase 2 auto-population.</p>
+      <ol class="step-list">
+        <li><p><strong>Host the file</strong> at e.g. <code>clinicaltools.centralhealth.net/cvdlipid</code> — self-contained, no server logic required.</p></li>
+        <li><p><strong>Whitelist the URL</strong> in Hyperspace: Epic → System Administration → Security → Trusted URLs.</p></li>
+        <li><p><strong>Update dot phrase text</strong> to point to the internal URL.</p></li>
+        <li><p><strong>Test in non-production</strong> before go-live.</p></li>
+      </ol>
+    </div>
+
+    <!-- Phase 2 — SmartText auto-populate -->
+    <div class="epic-section">
+      <h3>Phase 2 — SmartText Auto-Population (Epic build, moderate IT lift)</h3>
+      <p>Epic's <strong>SmartText</strong> can embed <strong>SmartLinks</strong> that pull live chart data — labs, vitals, medications, problem list — directly into the note when the clinician opens it. This means when a clinician uses the <code>.CVDLIPID</code> note template, the patient's most recent LDL-C, SBP, BMI, HbA1c, diabetes status, and current statin are pre-filled automatically. The clinician still runs the calculator to get the risk number, but all the inputs are already there — no chart-hunting required.</p>
+
+      <div class="info-box">
+        <strong>Important distinction:</strong> SmartLinks pull and display data — they cannot run calculations. The PREVENT equations and statin logic still require the clinician to open the calculator tool. Phase 3 (SMART on FHIR) is needed to auto-calculate risk. Phase 2 eliminates manual data transcription — Phase 3 eliminates the calculation step entirely.
+      </div>
+
+      <p style="margin-top:.85rem"><strong>SmartLink syntax for each PREVENT input field:</strong></p>
+      <div class="code-block">
+        <span class="code-label">Epic SmartLinks — chart data auto-population</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <code>Patient: @NAME@, @AGE@ yr old @SEX@   MRN: @MRN@   DOB: @DOB@   Date: @TODAYLONG@
+
+━━ CHART DATA (auto-populated from Epic) ━━━━━━━━━━━━━━━━━━━━━━
+
+Vitals (most recent encounter):
+  SBP:  @LASTBPSYS@  mmHg   (taken @LASTBPSYSDATE@)
+  BMI:  @LASTBMI@  kg/m²
+
+Lipid panel (most recent):
+  Total cholesterol:  @LABRESULT(TOTCHOL,1)@  mg/dL
+  HDL-C:              @LABRESULT(HDLC,1)@  mg/dL
+  LDL-C (direct):     @LABRESULT(LDLDIRECT,1)@  mg/dL
+  Non-HDL-C:          @LABRESULT(NONHDL,1)@  mg/dL
+  Triglycerides:      @LABRESULT(TRIG,1)@  mg/dL
+  Lipid panel date:   @LABRESULTDATE(LDLDIRECT)@
+
+Metabolic / renal:
+  eGFR:   @LABRESULT(EGFR,1)@  mL/min/1.73m²
+  HbA1c:  @LABRESULT(HGBA1C,1)@  %
+  UACR:   @LABRESULT(UACR,1)@  mg/g
+
+Active diagnoses (from problem list):
+  Diabetes:           @PROBLIST(DIABETES)@
+  CKD:                @PROBLIST(CKD)@
+  Hypertension:       @PROBLIST(HTN)@
+  Known ASCVD:        @PROBLIST(ASCVD)@
+  Heart failure:      @PROBLIST(HF)@
+  Familial hyperchol: @PROBLIST(FH)@
+
+Current medications (relevant):
+  Statins:            @MEDSEARCH(statin)@
+  BP medications:     @MEDSEARCH(antihypertensive)@
+  Ezetimibe:          @MEDSEARCH(ezetimibe)@
+  PCSK9 inhibitors:   @MEDSEARCH(evolocumab,alirocumab)@
+
+Smoking status: @SMOKINGSTATUS@
+ZIP code: @PATZIP@</code>
+      </div>
+
+      <div class="info-box" style="margin-top:.85rem">
+        <strong>Note for your Epic analyst:</strong> SmartLink syntax is instance-specific — the exact component names (e.g. <code>LDLDIRECT</code>, <code>HDLC</code>, <code>EGFR</code>) must match your lab compendium LRR records. Use the SmartLink search tool in Epic (type <code>@</code> in a note field and search) to find your site-specific component names. The <code>@LABRESULT()</code> and <code>@PROBLIST()</code> syntax above is representative — your analyst will map these to your specific build. This is a moderate build effort: typically 4–8 hours for an experienced Epic analyst.
+      </div>
+
+      <p style="margin-top:.85rem"><strong>Full Phase 2 SmartText template (auto-populated inputs + manual risk entry):</strong></p>
+      <div class="code-block">
+        <span class="code-label">Epic SmartText — .CVDLIPID (Phase 2 version with auto-populated inputs)</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <code>CARDIOVASCULAR RISK ASSESSMENT &amp; LIPID MANAGEMENT
+(AHA PREVENT Equations + 2026 ACC/AHA Dyslipidemia Guideline)
+Patient: @NAME@  |  Age: @AGE@  |  Sex: @SEX@  |  Date: @TODAYLONG@
+
+━━ INPUTS (auto-populated from chart) ━━━━━━━━━━━━━━━━━━━━━━━━
+
+  SBP: @LASTBPSYS@ mmHg  |  BMI: @LASTBMI@ kg/m²
+  Total-C: @LABRESULT(TOTCHOL,1)@ mg/dL  |  HDL-C: @LABRESULT(HDLC,1)@ mg/dL
+  LDL-C: @LABRESULT(LDLDIRECT,1)@ mg/dL  |  eGFR: @LABRESULT(EGFR,1)@ mL/min/1.73m²
+  HbA1c: @LABRESULT(HGBA1C,1)@%  |  UACR: @LABRESULT(UACR,1)@ mg/g  |  ZIP: @PATZIP@
+  BP meds: @MEDSEARCH(antihypertensive)@  |  Statin: @MEDSEARCH(statin)@
+  Diabetes: @PROBLIST(DIABETES)@  |  Smoking: @SMOKINGSTATUS@
+  Known ASCVD: @PROBLIST(ASCVD)@  |  FH: @PROBLIST(FH)@
+
+  ↑ Verify above values, then open .PREVENTCVD and .STATINCHOICE to calculate ↑
+
+━━ PREVENT RISK ESTIMATES (enter from calculator) ━━━━━━━━━━━━
+
+  Model used: ***Base / HbA1c / UACR / SDI / Full***
+  10-yr ASCVD: ***___***%  →  ***Low / Borderline / Intermediate / High***
+  10-yr CVD:   ***___***%    10-yr HF: ***___***%
+  30-yr ASCVD: ***___***%    30-yr CVD: ***___***%
+
+━━ LIPID MANAGEMENT (enter from Statin Chooser) ━━━━━━━━━━━━━━
+
+  Pathway: ***Primary / Secondary / FH-HeFH / FH-HoFH / Severe (LDL-C ≥190)***
+  Very high risk: ***Yes / No / N/A***
+  LDL-C target: ***&lt;___*** mg/dL  |  At goal: ***Yes / No — needs ↓___ mg/dL***
+  Statin intensity: ***High / Moderate / Low / Not indicated***
+  Agent: ***Atorvastatin ___mg / Rosuvastatin ___mg / Other: ___***
+  Ezetimibe: ***Initiating / Continue / Not indicated***
+  PCSK9 inhibitor: ***Indicated / Not yet / Already on: ___***
+  Safety flags: ***None / [specify]***
+
+━━ PLAN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. ***Start / Uptitrate / Continue*** ***[agent + dose]***
+2. ***Add / Continue / Hold*** ezetimibe 10 mg daily
+3. ***PCSK9i: Refer / Not indicated at this time***
+4. Recheck lipid panel in ***4–12*** weeks
+5. Follow-up lipids every ***6–12*** months once at goal
+6. ***[Additional items]***
+
+Tool: Central Health PREVENT + Statin Chooser (offline, no PHI transmitted)
+Sources: Khan SS et al. Circulation 2024;149:430–449 · 2026 ACC/AHA Dyslipidemia Guideline doi:10.1016/j.jacc.2025.11.016</code>
+      </div>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="epic-section">
+      <h3>Phase 3 — SMART on FHIR Full Auto-Calculation (Major IT project)</h3>
+      <p>SMART on FHIR launches the calculator from the chart context, pulls all FHIR resources, runs the PREVENT equations and statin logic automatically, and writes the risk number and recommendation directly into the note. The clinician reviews and signs — no manual data entry.</p>
+
+      <div class="info-box">
+        <strong>FHIR resources needed:</strong> Patient (age, sex, ZIP), Observation (SBP, Total-C, HDL-C, eGFR, BMI, HbA1c, UACR), Condition (diabetes, smoking, ASCVD, HF, FH, CKD), MedicationRequest (antihypertensives, statins, ezetimibe, PCSK9i).
+      </div>
+
+      <p><strong>Estimated effort:</strong> 4–8 weeks with an Epic-certified SMART on FHIR developer. Central Health IT or a vendor partner (Epic, Avaap, Nordic, Optimum Healthcare IT) can scope this. The offline HTML calculator in this tool is already architected to accept pre-populated inputs, making it a strong foundation for FHIR integration.</p>
+    </div>
+
+    <!-- IT Ticket -->
+    <div class="epic-section">
+      <h3>Epic IT Build Ticket Language</h3>
+      <p>Copy the following into your ServiceNow or Epic IT request:</p>
+
+      <div class="ticket-block">
+        <div class="tfield"><strong>Summary</strong>New dot phrase for AHA PREVENT CVD Risk Calculator — primary prevention clinical decision support</div>
+        <div class="tfield"><strong>Request Type</strong>Epic Ambulatory · SmartText / Dot Phrase Build</div>
+        <div class="tfield"><strong>Priority</strong>Standard</div>
+        <div class="tfield"><strong>Business Justification</strong>The 2026 ACC/AHA Dyslipidemia Guideline endorses the AHA PREVENT equations as the preferred CVD risk calculator for primary prevention in adults aged 30–79. PREVENT replaces the Pooled Cohort Equations and adds heart failure risk estimation, eGFR as a predictor, and race-free calculation. A dot phrase will enable clinicians to quickly access the validated calculator during encounters without leaving the note.</div>
+        <div class="tfield"><strong>Requested Build</strong>
+Create a new dot phrase with trigger <strong>.preventcvd</strong> that inserts the following text (plain text with URL hyperlink):
+<br><br>
+"AHA PREVENT CVD Risk Calculator (primary prevention, ages 30–79): [URL]
+10-yr ASCVD thresholds per 2026 ACC/AHA: &lt;5% Low | 5–7.5% Borderline | 7.5–10% Intermediate | ≥10% High
+Contraindicated: known CVD, LVEF &lt;40%, CAC ≥300, ESKD, or life expectancy &lt;1 year."
+<br><br>
+URL (Phase 1): https://professional.heart.org/en/guidelines-and-statements/prevent-calculator</div>
+        <div class="tfield"><strong>Go-Live Target</strong>As soon as possible — no dependencies on other projects</div>
+        <div class="tfield"><strong>Requestor</strong>[Your name, role, department, contact]</div>
+        <div class="tfield"><strong>Clinical Owner / Approver</strong>[Physician champion name and NPI or Epic ID]</div>
+      </div>
+    </div>
+
+
+    <!-- Unified PREVENT + Statin Chooser Epic section -->
+    <div class="epic-section">
+      <h3>Unified CVD Risk &amp; Lipid Management SmartPhrase</h3>
+      <p>Run both tools together — PREVENT for CVD risk estimation, Statin Chooser for treatment decision — then drop a single SmartPhrase into the note to document the full assessment. One trigger captures everything.</p>
+
+      <div class="info-box">
+        <strong>Recommended workflow:</strong>
+        <ol style="margin:.4rem 0 0 1.1rem;font-size:12.5px;line-height:1.8">
+          <li>Open the PREVENT Calculator tab → enter patient values → calculate risk</li>
+          <li>Click <strong>Statin Chooser</strong> tab → import ASCVD risk → enter LDL-C and clinical scenario → get recommendation</li>
+          <li>In Epic note, type <strong>.CVDLIPID</strong> → SmartPhrase expands → fill in wildcards from tool output</li>
+        </ol>
+      </div>
+
+      <p style="margin-top:.85rem"><strong>Quick-link dot phrases (open each tool):</strong></p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:.85rem">
+        <div class="code-block" style="margin:0">
+          <span class="code-label">PREVENT Calculator</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <code>.preventcvd</code>
+        </div>
+        <div class="code-block" style="margin:0">
+          <span class="code-label">Statin Chooser</span>
+          <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+          <code>.statinchoice</code>
+        </div>
+      </div>
+
+      <p><strong>Unified SmartPhrase — trigger <code>.CVDLIPID</code>:</strong></p>
+      <div class="code-block">
+        <span class="code-label">Epic SmartPhrase — .CVDLIPID (copy full text below)</span>
+        <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+        <code>CARDIOVASCULAR RISK ASSESSMENT &amp; LIPID MANAGEMENT
+(AHA PREVENT Equations + 2026 ACC/AHA Dyslipidemia Guideline)
+Assessed: ***DATE***
+
+━━ PART 1: CVD RISK ESTIMATION (AHA PREVENT) ━━━━━━━━━━━━━━━━━
+
+Patient inputs:
+  Age: ***___*** yr   Sex: ***M / F***   SBP: ***___*** mmHg   BP meds: ***Y / N***
+  Total-C: ***___*** mg/dL   HDL-C: ***___*** mg/dL   eGFR: ***___*** mL/min/1.73m²
+  BMI: ***___*** kg/m²   Diabetes: ***Y / N***   Smoker: ***Y / N***   Statin: ***Y / N***
+  Optional — HbA1c: ***___*** %   UACR: ***___*** mg/g   ZIP: ***_____***
+  Model used: ***Base / HbA1c / UACR / SDI / Full***
+
+10-year risk estimates:
+  Total CVD:      ***___*** %
+  ASCVD:          ***___*** %   → ***Low (&lt;3%) / Borderline (3–5%) / Intermediate (5–10%) / High (≥10%)***
+  Heart failure:  ***___*** %
+
+30-year risk estimates:
+  Total CVD:      ***___*** %
+  ASCVD:          ***___*** %
+  Heart failure:  ***___*** %
+
+PREVENT contraindications checked: ***None identified / [specify]***
+
+━━ PART 2: LIPID MANAGEMENT DECISION (2026 ACC/AHA) ━━━━━━━━━━
+
+Clinical pathway: ***PRIMARY PREVENTION / SECONDARY PREVENTION / FH — HeFH / FH — HoFH / SEVERE (LDL-C ≥190)***
+Very high risk (secondary prevention): ***YES / NO / N/A***
+
+Current LDL-C: ***___*** mg/dL
+LDL-C target:  ***&lt;___ mg/dL*** per 2026 ACC/AHA
+At goal:       ***YES / NO — needs ↓ ___ mg/dL (~___%)***
+
+Statin intensity: ***HIGH / MODERATE / LOW / NOT INDICATED***
+Recommended agent: ***Atorvastatin ___mg / Rosuvastatin ___mg / Other: ___***
+Current statin: ***None / [agent + dose]***
+
+Non-statin therapy:
+  Ezetimibe 10 mg:  ***Initiating / Continue / Not indicated / Already on***
+  PCSK9 inhibitor:  ***Indicated — LDL-C ___ on statin+EZ / Not yet indicated / Already on: ___***
+  Bempedoic acid:   ***Indicated (intolerance) / Not indicated***
+
+Safety flags: ***None / Statin intolerance / Pregnancy — LLT deferred / Active liver disease — LLT deferred / CKD (dose adjusted) / Drug interactions (agent adjusted) / ESRD — shared decision***
+
+━━ PLAN ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. ***Start / Uptitrate / Continue*** ***[agent + dose]***
+2. ***Add / Continue / Hold*** ezetimibe 10 mg daily
+3. ***Refer for PCSK9 inhibitor / No PCSK9i at this time***
+4. Recheck fasting lipid panel in ***4–12*** weeks
+5. Repeat lipids every ***6–12*** months once at goal
+6. ***[Additional plan items]***
+
+Assessed using Central Health PREVENT + Statin Chooser (offline, no PHI transmitted).
+Sources: Khan SS et al. Circulation 2024;149:430–449 · 2026 ACC/AHA Dyslipidemia Guideline, JACC/Circulation doi:10.1016/j.jacc.2025.11.016</code>
+      </div>
+
+      <div class="info-box" style="margin-top:.85rem">
+        <strong>Epic build notes for your analyst:</strong>
+        <ul style="margin:.4rem 0 0 1.1rem;font-size:12.5px;line-height:1.8">
+          <li><code>***...***</code> fields are SmartList wildcards — convert to <code>.WC.</code> free-text or structured SmartList entries as preferred</li>
+          <li>The <code>━━</code> section dividers are Unicode box-drawing characters — render correctly in Epic notes and print cleanly</li>
+          <li>The "Model used" and pathway fields can optionally be built as SmartLists with the valid options pre-populated for faster selection</li>
+          <li>If SMART on FHIR integration is built in Phase 2, the input fields in Part 1 can be auto-populated from the chart, reducing this to a review-and-sign workflow</li>
+        </ul>
+      </div>
+
+      <p style="margin-top:.85rem"><strong>IT build ticket addition — add to existing .PREVENTCVD ticket or create new:</strong></p>
+      <div class="ticket-block">
+        <div class="tfield"><strong>Additional SmartPhrases Requested</strong>
+          <br>1. <strong>.CVDLIPID</strong> — Unified CVD risk + lipid management documentation template (full text above)
+          <br>2. <strong>.STATINCHOICE</strong> — Dot phrase linking to Statin Chooser tool
+        </div>
+        <div class="tfield"><strong>Notes for Build</strong>Wildcards marked with <code>***...***</code> should be converted to free-text SmartList fields. Section headers use Unicode em-dashes and box-drawing characters — confirm rendering in your Epic version before go-live. Test in non-production first.</div>
+      </div>
+    </div>
+
+    <!-- Governance -->
+    <div class="epic-section">
+      <h3>Governance & Maintenance</h3>
+      <ul style="font-size:13.5px;color:var(--text2);line-height:1.75;padding-left:1.1rem">
+        <li>The AHA PREVENT calculator URL should be reviewed annually to confirm it remains active and current</li>
+        <li>If the offline HTML file is used, it should be versioned (current: v1.0, validated May 2026) and reviewed when ACC/AHA guidelines update</li>
+        <li>Threshold changes (e.g., statin initiation cutoff) may require dot phrase text updates — assign a clinical owner to monitor guideline updates</li>
+        <li>SMART on FHIR app will require Epic upgrade compatibility review at each Epic upgrade cycle</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ── Navigation ────────────────────────────────────────────────────────────────
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(l=>l.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.getElementById('nav-'+id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function copyCode(btn){
+  const code = btn.nextElementSibling.textContent;
+  navigator.clipboard.writeText(code).then(()=>{
+    btn.textContent='Copied!';
+    setTimeout(()=>btn.textContent='Copy',1800);
+  });
+}
+
+// ── Calculator logic ──────────────────────────────────────────────────────────
+function tog(g,btn){document.querySelectorAll('#'+g+' .tb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');}
+function getv(g){const a=document.querySelector('#'+g+' .tb.on');return a?parseFloat(a.dataset.v):0;}
+function L(lo){return Math.exp(lo)/(1+Math.exp(lo));}
+
+const SDI_MAP={'78701':3,'78702':6,'78703':2,'78704':4,'78705':3,'78712':3,'78717':3,'78719':7,'78721':6,'78722':3,'78723':5,'78724':5,'78725':6,'78726':3,'78727':3,'78728':4,'78729':3,'78730':2,'78731':2,'78732':2,'78733':2,'78734':3,'78735':2,'78736':3,'78737':3,'78738':2,'78739':3,'78741':6,'78742':7,'78744':6,'78745':4,'78746':1,'78747':5,'78748':4,'78749':3,'78750':3,'78751':4,'78752':5,'78753':5,'78754':5,'78756':3,'78757':4,'78758':4,'78759':3};
+
+// 10-year equations — Table S24
+function lo10f_cvd(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15),blo=(Math.min(bmi,30)-25)/5,bhi=(Math.max(bmi,30)-30)/5;return-3.307728+0.7939329*a+0.0305239*(nh-3.5)-0.1606857*(hm-1.3)/0.3-0.2394003*slo+0.3600780*shi+0.8667604*dm+0.5360739*sm+0.6045917*elo+0.0433769*ehi+0.3151672*bp-0.1477655*st-0.0663612*bp*shi+0.1197879*st*(nh-3.5)-0.0819715*a*(nh-3.5)+0.0306769*a*(hm-1.3)/0.3-0.0946348*a*shi-0.2705700*a*dm-0.0787150*a*sm-0.1637806*a*elo;}
+function lo10f_asc(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-3.819975+0.7198830*a+0.1176967*(nh-3.5)-0.1511850*(hm-1.3)/0.3-0.0835358*slo+0.3592852*shi+0.8348585*dm+0.4831078*sm+0.4864619*elo+0.0397779*ehi+0.2265309*bp-0.0592374*st-0.0395762*bp*shi+0.0844423*st*(nh-3.5)-0.0567839*a*(nh-3.5)+0.0325692*a*(hm-1.3)/0.3-0.1035985*a*shi-0.2417542*a*dm-0.0791142*a*sm-0.1671492*a*elo;}
+function lo10f_hf(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const a=(age-55)/10,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15),blo=(Math.min(bmi,30)-25)/5,bhi=(Math.max(bmi,30)-30)/5;return-4.310409+0.8998235*a-0.4559771*slo+0.3576505*shi+1.0383460*dm+0.5839160*sm-0.0072294*blo+0.2997706*bhi+0.7451638*elo+0.0557087*ehi+0.3534442*bp-0.0981511*bp*shi-0.0946663*a*shi-0.3581041*a*dm-0.1159453*a*sm-0.0038780*bhi-0.1884289*a*elo;}
+function lo10f_chd(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-5.9880+0.6404*a+0.1859*(nh-3.5)-0.1831*(hm-1.3)/0.3-0.1427*slo+0.2578*shi+0.8011*dm+0.6212*sm+0.4908*elo+0.0401*ehi+0.2424*bp-0.0536*st-0.0373*bp*shi+0.0843*st*(nh-3.5)-0.0584*a*(nh-3.5)+0.0313*a*(hm-1.3)/0.3-0.1090*a*shi-0.1928*a*dm-0.0799*a*sm-0.1655*a*elo;}
+function lo10f_str(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-5.8780+0.7614*a+0.0813*(nh-3.5)-0.1291*(hm-1.3)/0.3-0.0968*slo+0.3568*shi+0.9101*dm+0.5761*sm+0.5024*elo+0.0411*ehi+0.3931*bp-0.0303*st-0.0447*bp*shi+0.0512*st*(nh-3.5)-0.0454*a*(nh-3.5)+0.0321*a*(hm-1.3)/0.3-0.1417*a*shi-0.2138*a*dm-0.0761*a*sm-0.1747*a*elo;}
+function lo10m_cvd(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-3.031168+0.7688528*a+0.0736174*(nh-3.5)-0.0954431*(hm-1.3)/0.3-0.4347345*slo+0.3362658*shi+0.7692857*dm+0.4386871*sm+0.5378979*elo+0.0164827*ehi+0.2888790*bp-0.1337349*st-0.0475924*bp*shi+0.1502730*st*(nh-3.5)-0.0517874*a*(nh-3.5)+0.0191169*a*(hm-1.3)/0.3-0.1049477*a*shi-0.2251948*a*dm-0.0895067*a*sm-0.1543702*a*elo;}
+function lo10m_asc(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-3.500655+0.7099847*a+0.1658663*(nh-3.5)-0.1144285*(hm-1.3)/0.3-0.2837212*slo+0.3239977*shi+0.7189597*dm+0.3956973*sm+0.3690075*elo+0.0203619*ehi+0.2036522*bp-0.0865581*st-0.0322916*bp*shi+0.1145630*st*(nh-3.5)-0.0300005*a*(nh-3.5)+0.0232747*a*(hm-1.3)/0.3-0.0927024*a*shi-0.2018525*a*dm-0.0970527*a*sm-0.1217081*a*elo;}
+function lo10m_hf(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const a=(age-55)/10,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15),blo=(Math.min(bmi,30)-25)/5,bhi=(Math.max(bmi,30)-30)/5;return-3.946391+0.8972642*a-0.6811466*slo+0.3634461*shi+0.9237760*dm+0.5023736*sm-0.0485841*blo+0.3726929*bhi+0.6926917*elo+0.0251827*ehi+0.2980922*bp-0.0497731*bp*shi-0.1289201*a*shi-0.3040924*a*dm-0.1401688*a*sm+0.0068126*a*bhi-0.1797778*a*elo;}
+function lo10m_chd(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-6.2840+0.6440*a+0.2132*(nh-3.5)-0.2062*(hm-1.3)/0.3-0.2853*slo+0.2644*shi+0.8004*dm+0.5945*sm+0.4030*elo+0.0347*ehi+0.2358*bp-0.0704*st-0.0326*bp*shi+0.1071*st*(nh-3.5)-0.0346*a*(nh-3.5)+0.0228*a*(hm-1.3)/0.3-0.0873*a*shi-0.2126*a*dm-0.0961*a*sm-0.1356*a*elo;}
+function lo10m_str(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-6.6290+0.8256*a+0.1048*(nh-3.5)-0.1567*(hm-1.3)/0.3-0.2682*slo+0.3688*shi+0.9284*dm+0.5614*sm+0.4406*elo+0.0440*ehi+0.3618*bp-0.0447*st-0.0390*bp*shi+0.0665*st*(nh-3.5)-0.0423*a*(nh-3.5)+0.0275*a*(hm-1.3)/0.3-0.1131*a*shi-0.2268*a*dm-0.0914*a*sm-0.1533*a*elo;}
+
+// 30-year equations — Table S12F
+function lo30f_cvd(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-1.318827+0.5503079*a-0.0928369*a*a+0.0409794*(nh-3.5)-0.1663306*(hm-1.3)/0.3-0.1628654*slo+0.3299505*shi+0.6793894*dm+0.3196112*sm+0.1857101*elo+0.0553528*ehi+0.2894000*bp-0.0756880*st-0.0563670*bp*shi+0.1071019*st*(nh-3.5)-0.0751438*a*(nh-3.5)+0.0301786*a*(hm-1.3)/0.3-0.0998776*a*shi-0.3206166*a*dm-0.1607862*a*sm-0.1450788*a*elo;}
+function lo30f_asc(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-1.974074+0.4669202*a-0.0893118*a*a+0.1256901*(nh-3.5)-0.1542255*(hm-1.3)/0.3-0.0018093*slo+0.3229490*shi+0.6296707*dm+0.2682920*sm+0.1001060*elo+0.0499663*ehi+0.1875292*bp+0.0152476*st-0.0276123*bp*shi+0.0736147*st*(nh-3.5)-0.0521962*a*(nh-3.5)+0.0316918*a*(hm-1.3)/0.3-0.1046101*a*shi-0.2727793*a*dm-0.1530907*a*sm-0.1299149*a*elo;}
+function lo30f_hf(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const a=(age-55)/10,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15),blo=(Math.min(bmi,30)-25)/5,bhi=(Math.max(bmi,30)-30)/5;return-2.205379+0.6254374*a-0.0983038*a*a-0.3919241*slo+0.3142295*shi+0.8330787*dm+0.3438651*sm+0.0594874*blo+0.2525536*bhi+0.2981642*elo+0.0667159*ehi+0.3339210*bp-0.0893177*bp*shi-0.0974299*a*shi-0.4048550*a*dm-0.1982991*a*sm-0.0035619*a*bhi-0.1564215*a*elo;}
+function lo30f_chd(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-2.733866+0.4912423*a-0.0917078*a*a+0.1878256*(nh-3.5)-0.2035703*(hm-1.3)/0.3-0.0030222*slo+0.3111757*shi+0.6803247*dm+0.3215313*sm+0.1252615*elo+0.0414579*ehi+0.1561303*bp+0.0384138*st-0.0795531*bp*shi+0.0635262*st*(nh-3.5)-0.0637665*a*(nh-3.5)+0.0474074*a*(hm-1.3)/0.3-0.0876484*a*shi-0.2803099*a*dm-0.1513626*a*sm-0.1130454*a*elo;}
+function lo30f_str(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-2.620780+0.4366978*a-0.0873673*a*a+0.0586334*(nh-3.5)-0.1069016*(hm-1.3)/0.3-0.0317106*slo+0.3272741*shi+0.5841726*dm+0.2045681*sm+0.0765812*elo+0.0603226*ehi+0.2087816*bp-0.0095137*st+0.0014436*bp*shi+0.0720012*st*(nh-3.5)-0.0361779*a*(nh-3.5)+0.0158880*a*(hm-1.3)/0.3-0.1179062*a*shi-0.2710221*a*dm-0.1702836*a*sm-0.1320992*a*elo;}
+function lo30m_cvd(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-1.148204+0.4627309*a-0.0984281*a*a+0.0836088*(nh-3.5)-0.1029824*(hm-1.3)/0.3-0.2140352*slo+0.2904325*shi+0.5331276*dm+0.2141914*sm+0.1155556*elo+0.0603775*ehi+0.2327140*bp-0.0272112*st-0.0384488*bp*shi+0.1341920*st*(nh-3.5)-0.0511759*a*(nh-3.5)+0.0165865*a*(hm-1.3)/0.3-0.1101437*a*shi-0.2585943*a*dm-0.1566406*a*sm-0.1166776*a*elo;}
+function lo30m_asc(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-1.736444+0.3994099*a-0.0937484*a*a+0.1744643*(nh-3.5)-0.1202030*(hm-1.3)/0.3-0.0665117*slo+0.2753037*shi+0.4790257*dm+0.1782635*sm-0.0218789*elo+0.0602553*ehi+0.1421182*bp+0.0135996*st-0.0218265*bp*shi+0.1013148*st*(nh-3.5)-0.0312619*a*(nh-3.5)+0.0206730*a*(hm-1.3)/0.3-0.0920935*a*shi-0.2159947*a*dm-0.1548811*a*sm-0.0712547*a*elo;}
+function lo30m_hf(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const a=(age-55)/10,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15),blo=(Math.min(bmi,30)-25)/5,bhi=(Math.max(bmi,30)-30)/5;return-1.957510+0.5681541*a-0.1048388*a*a-0.4761564*slo+0.3032400*shi+0.6840338*dm+0.2656273*sm+0.0833107*blo+0.2699900*bhi+0.2541805*elo+0.0638923*ehi+0.2583631*bp-0.0391938*bp*shi-0.1269124*a*shi-0.3273572*a*dm-0.2043019*a*sm-0.0182831*a*bhi-0.1342618*a*elo;}
+function lo30m_chd(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-2.376762+0.4171209*a-0.0949994*a*a+0.2651913*(nh-3.5)-0.1879446*(hm-1.3)/0.3-0.0971746*slo+0.2589310*shi+0.4956463*dm+0.1728844*sm-0.0091955*elo+0.0578155*ehi+0.0939196*bp+0.0508921*st-0.0486024*bp*shi+0.0669478*st*(nh-3.5)-0.0533361*a*(nh-3.5)+0.0461425*a*(hm-1.3)/0.3-0.0812234*a*shi-0.2163150*a*dm-0.1749197*a*sm-0.0241467*a*elo;}
+function lo30m_str(age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st){const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm,slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20,elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);return-2.458022+0.4003448*a-0.0935927*a*a+0.0309419*(nh-3.5)-0.0280763*(hm-1.3)/0.3-0.0477040*slo+0.2925734*shi+0.4236823*dm+0.1675238*sm-0.0009216*elo+0.0575221*ehi+0.1685514*bp-0.0208290*st+0.0230042*bp*shi+0.1413652*st*(nh-3.5)+0.0145411*a*(nh-3.5)-0.0149606*a*(hm-1.3)/0.3-0.1118468*a*shi-0.2152953*a*dm-0.1339295*a*sm-0.1225081*a*elo;}
+
+// Enhanced add-ons
+// ── S12C (10yr HbA1c model) — full standalone equations ─────────────────────
+// Each array: (intercept,age,nonHDL,HDL,sbpLo,sbpHi,dm,sm,eGFR_lo,eGFR_hi,
+//              bp,st,bp_shi,st_nh,age_nh,age_hdl,age_shi,age_dm,age_sm,age_elo,
+//              a1c_dm,a1c_nodm)
+const S12C={female:{
+  cvd:[-3.306162,0.78581780,1.9443800e-2,-0.15219640,-0.22966810,0.34657770,0.53662410,0.54116820,0.59318979,4.7245800e-2,0.31585670,-0.1535174,-6.8775200e-2,0.1054746,-7.6111900e-2,3.0746900e-2,-9.0596600e-2,-0.22418570,-8.0186000e-2,-0.1667286,0.1338348,0.1622409],
+  asc:[-3.838746,0.71118310,0.106797,-0.14257450,-7.3682400e-2,0.34808440,0.5112951,0.4880292,0.4754997,4.3813200e-2,0.22590930,-6.4887200e-2,-4.3764500e-2,6.9708200e-2,-5.0638200e-2,3.2747500e-2,-9.9644200e-2,-0.19243380,-8.0353900e-2,-0.16825860,0.13390550,0.15964610],
+  hf: [-4.288225,0.89973910,0,0,-0.44227490,0.33786910,0.681284,0.58860050,0.73446999,5.9260000e-2,0.35434750,0,-0.10021390,0,0,0,-8.7876500e-2,-0.30368400,-0.11789430,-0.19121830,0.18564420,0.18330830],
+  chd:[-4.667457,0.75594150,0.16639330,-0.19050040,-7.6850900e-2,0.33964700,0.5632228,0.54779999,0.51050850,3.8134400e-2,0.2023093,-4.2592700e-2,-9.5379100e-2,5.8737200e-2,-6.0766400e-2,4.8576500e-2,-8.4169800e-2,-0.19869670,-8.0706900e-2,-0.16109130,0.18327390,0.17554650],
+  str:[-4.396448,0.68549570,4.3261000e-2,-9.8379300e-2,-0.1017197,0.35659550,0.4609555,0.41983010,0.44365179,5.4498900e-2,0.2493831,-8.5977500e-2,-1.14564e-2,6.8907900e-2,-3.6013000e-2,1.7180900e-2,-0.115679,-0.2025816,-0.1003882,-0.1760082,9.2969500e-2,0.15450540],
+},male:{
+  cvd:[-3.040901,0.76991770,6.0509300e-2,-8.8852500e-2,-0.417713,0.32886570,0.47594710,0.43856630,0.53346159,2.0643100e-2,0.29175240,-0.13833130,-4.8262200e-2,0.13937960,-4.6350100e-2,2.0592600e-2,-0.10377170,-0.17376970,-9.1583900e-2,-0.16370390,0.1315900,0.1295185],
+  asc:[-3.518350,0.7064146,0.15322670,-0.1082166,-0.26752880,0.31738090,0.4326040,0.39588420,0.36650139,2.5024300e-2,0.20611580,-8.9998800e-2,-3.3495900e-2,0.1034168,-2.5540600e-2,2.4753800e-2,-9.1744100e-2,-0.14991950,-9.8089000e-2,-0.1305231,0.1157161,0.1288303],
+  hf: [-3.961954,0.91178700,0,0,-0.65680710,0.35246450,0.5849752,0.5014014,0.68922190,2.9237700e-2,0.30382960,0,-5.1503200e-2,0,0,0,-0.12623430,-0.24495140,-0.1392217,-0.19171050,0.1652857,0.1505859],
+  chd:[-4.219654,0.72236420,0.2443591,-0.1755236,-0.30257450,0.30568920,0.4874841,0.39424560,0.37480079,2.5040700e-2,0.16161820,-5.1373300e-2,-6.1415000e-2,7.1090900e-2,-4.7658700e-2,5.0269400e-2,-8.3845500e-2,-0.16306790,-0.1220691,-8.5950500e-2,0.1251064,0.1177006],
+  str:[-4.179346,0.72444680,1.3428600e-2,-2.0435700e-2,-0.25069630,0.3408562,0.3535500,0.38549040,0.38697870,2.3766300e-2,0.23615900,-0.12419760,9.5878000e-3,0.1424174,1.8922000e-2,-9.3452000e-3,-0.1143576,-0.1559808,-8.2419400e-2,-0.18909040,0.1076023,0.1408596],
+}};
+
+// ── S12H (30yr HbA1c model) — full standalone equations ─────────────────────
+// Array: (intercept,age,age2,nonHDL,HDL,sbpLo,sbpHi,dm,sm,eGFR_lo,eGFR_hi,
+//         bp,st,bp_shi,st_nh,age_nh,age_hdl,age_shi,age_dm,age_sm,age_elo,
+//         a1c_dm,a1c_nodm)
+const S12H={female:{
+  cvd:[-1.341059,0.53434930,-9.5231400e-2,2.9812400e-2,-0.15784510,-0.15044880,0.31733680,0.43147380,0.32094990,0.17714350,5.8282800e-2,0.28889470,-7.9588600e-2,-6.0043800e-2,9.2059800e-2,-6.9610800e-2,3.0880700e-2,-9.5405100e-2,-0.27634080,-0.16239440,-0.14305140,9.4054300e-2,0.1116486],
+  asc:[-2.011533,0.45555740,-9.0350100e-2,0.11483210,-0.14587540,8.9323000e-3,0.31390290,0.38628100,0.27143090,9.3098700e-2,5.3221600e-2,0.18621810,1.0696400e-2,-3.2971300e-2,5.8360900e-2,-4.6327300e-2,3.2471700e-2,-0.10047770,-0.22669440,-0.15418590,-0.12860050,8.7582700e-2,0.1126417],
+  hf: [-2.193553,0.62108560,-0.10009720,0,0,-0.37736970,0.29531600,0.56816920,0.34491390,0.28757810,6.9201300e-2,0.33349360,0,-9.2233900e-2,0,0,0,-9.0788500e-2,-0.35546460,-0.20088460,-0.15680300,0.14483360,0.12778380],
+  chd:[-2.802642,0.48531870,-9.2965400e-2,0.17331520,-0.19294520,9.2228000e-3,0.29824400,0.42102890,0.32542370,0.11834720,4.6280500e-2,0.15653310,3.3512000e-2,-8.6614300e-2,4.6849700e-2,-5.6455500e-2,4.8103400e-2,-8.1980100e-2,-0.22649330,-0.15358400,-0.11227380,0.13439500,0.12704580],
+  str:[-2.618396,0.42966790,-8.8311800e-2,4.8732100e-2,-0.10014060,-1.9994700e-2,0.31983820,0.32709640,0.20395420,6.9905200e-2,6.2555000e-2,0.20809780,-1.4200900e-2,-2.9543000e-3,5.7452500e-2,-3.1538200e-2,1.6644800e-2,-0.11450200,-0.22989240,-0.17089900,-0.13074330,4.5762400e-2,0.1056467],
+},male:{
+  cvd:[-1.180767,0.45198730,-0.10162400,7.0045600e-2,-9.6800500e-2,-0.19235270,0.28270430,0.34171520,0.21052720,0.11132910,6.4013500e-2,0.23342480,-2.9942100e-2,-3.9320400e-2,0.12288540,-4.6373700e-2,1.8459900e-2,-0.10857440,-0.22080490,-0.15779780,-0.11793750,7.6816900e-2,7.7729500e-2],
+  asc:[-1.777708,0.38832670,-9.5811400e-2,0.16133740,-0.11444180,-4.7433800e-2,0.26912810,0.28597730,0.17595530,-2.4289800e-2,6.4452300e-2,0.14287400,1.1506200e-2,-2.3330000e-2,8.9966400e-2,-2.7547800e-2,2.2573000e-2,-9.0802000e-2,-0.17718940,-0.15488470,-7.3275400e-2,5.9108900e-2,8.2115800e-2],
+  hf: [-1.974999,0.57037290,-0.10845440,0,0,-0.44717670,0.29101520,0.45072420,0.25958500,0.24547060,6.7564900e-2,0.26119910,0,-4.0890800e-2,0,0,0,-0.12410510,-0.28494610,-0.20323080,-0.13830100,0.11011840,9.4919800e-2],
+  chd:[-2.484330,0.39445080,-9.5685700e-2,0.25193650,-0.18188100,-8.2920300e-2,0.25345960,0.32982020,0.17733790,-5.9506000e-3,6.2562300e-2,9.6026800e-2,4.8911500e-2,-5.0231000e-2,5.7355400e-2,-4.9881900e-2,4.7914400e-2,-7.9666500e-2,-0.18228390,-0.17449510,-2.5945600e-2,6.9563600e-2,7.0754100e-2],
+  str:[-2.438154,0.39740200,-9.5342500e-2,1.8020200e-2,-2.4253400e-2,-2.8341400e-2,0.28706410,0.18944070,0.16322780,-2.7618000e-3,6.0561700e-2,0.17003680,-2.5615500e-2,2.0109900e-2,0.12816840,1.8552400e-2,-1.2733500e-2,-0.11058480,-0.17440770,-0.13339410,-0.12545910,5.0054400e-2,9.1772700e-2],
+}};
+
+function calcHba1c10(sex,o,age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st,hba1c){
+  const b=S12C[sex][o];
+  const [intercept,b_age,b_nh,b_hdl,b_slo,b_shi,b_dm,b_sm,b_elo,b_ehi,
+         b_bp,b_st,b_bp_shi,b_st_nh,b_age_nh,b_age_hdl,b_age_shi,b_age_dm,b_age_sm,b_age_elo,
+         b_a1c_dm,b_a1c_nodm]=b;
+  const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm;
+  const slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20;
+  const elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);
+  const blo=(Math.min(bmi,30)-25)/5,bhi=(Math.max(bmi,30)-30)/5;
+  let lo=intercept+b_age*a+b_nh*(nh-3.5)+b_hdl*(hm-1.3)/0.3
+    +b_slo*slo+b_shi*shi+b_dm*dm+b_sm*sm+b_elo*elo+b_ehi*ehi
+    +b_bp*bp+b_st*st+b_bp_shi*bp*shi+b_st_nh*st*(nh-3.5)
+    +b_age_nh*a*(nh-3.5)+b_age_hdl*a*(hm-1.3)/0.3
+    +b_age_shi*a*shi+b_age_dm*a*dm+b_age_sm*a*sm+b_age_elo*a*elo
+    +(dm?b_a1c_dm:b_a1c_nodm)*(hba1c-5.3);
+  if(o==='hf') lo+=sex==='female'?(-1.4865700e-2*blo+0.29583740*bhi-8.3450e-3*a*bhi):(-5.1235200e-2*blo+0.36529400*bhi+9.5920e-4*a*bhi);
+  return lo;
+}
+
+function calcHba1c30(sex,o,age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st,hba1c){
+  const b=S12H[sex][o];
+  const [intercept,b_age,b_age2,b_nh,b_hdl,b_slo,b_shi,b_dm,b_sm,b_elo,b_ehi,
+         b_bp,b_st,b_bp_shi,b_st_nh,b_age_nh,b_age_hdl,b_age_shi,b_age_dm,b_age_sm,b_age_elo,
+         b_a1c_dm,b_a1c_nodm]=b;
+  const tm=tc*.02586,hm=hdl*.02586,a=(age-55)/10,nh=tm-hm;
+  const slo=(Math.min(sbp,110)-110)/20,shi=(Math.max(sbp,110)-130)/20;
+  const elo=(Math.min(egfr,60)-60)/(-15),ehi=(Math.max(egfr,60)-90)/(-15);
+  const blo=(Math.min(bmi,30)-25)/5,bhi=(Math.max(bmi,30)-30)/5;
+  let lo=intercept+b_age*a+b_age2*a*a+b_nh*(nh-3.5)+b_hdl*(hm-1.3)/0.3
+    +b_slo*slo+b_shi*shi+b_dm*dm+b_sm*sm+b_elo*elo+b_ehi*ehi
+    +b_bp*bp+b_st*st+b_bp_shi*bp*shi+b_st_nh*st*(nh-3.5)
+    +b_age_nh*a*(nh-3.5)+b_age_hdl*a*(hm-1.3)/0.3
+    +b_age_shi*a*shi+b_age_dm*a*dm+b_age_sm*a*sm+b_age_elo*a*elo
+    +(dm?b_a1c_dm:b_a1c_nodm)*(hba1c-5.3);
+  if(o==='hf') lo+=sex==='female'?(5.4009400e-2*blo+0.24976700*bhi-7.9611000e-3*a*bhi):(8.5067600e-2*blo+0.26372220*bhi-2.3971400e-2*a*bhi);
+  return lo;
+}
+function addUacr(sex,o,yr,uacr){
+  const B={female:{cvd_10:0.1530640,asc_10:0.1153090,hf_10:0.2075580,chd_10:0.1261700,str_10:0.1177540,cvd_30:0.1142251,asc_30:0.0903471,hf_30:0.1486028,chd_30:0.0979522,str_30:0.0806194},male:{cvd_10:0.1393640,asc_10:0.0988260,hf_10:0.1960290,chd_10:0.1074180,str_10:0.1272790,cvd_30:0.1007571,asc_30:0.0684872,hf_30:0.1366452,chd_30:0.0609433,str_30:0.0793756}};
+  const b=B[sex][o+'_'+yr];if(!b)return 0;return b*Math.log(Math.max(uacr,0.1));
+}
+function addSdi(sex,o,yr,sdi){
+  // Betas: [decile-1 (protective), decile 4-6 (mid), decile 7-10 (high)]
+  // Decile-1 negative betas back-calculated from AHA site (78746=4.0% vs base 4.8%)
+  // Deciles 2-3 = reference (no adjustment)
+  const B={
+    female:{
+      cvd_10: [-0.3399,0.1484490,0.2452700],
+      asc_10: [-0.3408,0.1488490,0.2537280],
+      hf_10:  [-0.3039,0.1327360,0.2538200],
+      chd_10: [-0.4175,0.1823560,0.2557000],
+      str_10: [-0.2829,0.1235630,0.2366430],
+      cvd_30: [-0.3345,0.1460990,0.1975843],
+      asc_30: [-0.3352,0.1464110,0.1976537],
+      hf_30:  [-0.3071,0.1341350,0.1987543],
+      chd_30: [-0.3512,0.1534190,0.1991519],
+      str_30: [-0.2965,0.1294960,0.1750215]
+    },
+    male:{
+      cvd_10: [-0.2268,0.0990860,0.3002070],
+      asc_10: [-0.1907,0.0832970,0.3004870],
+      hf_10:  [-0.3024,0.1320970,0.3737540],
+      chd_10: [-0.2059,0.0899560,0.2616050],
+      str_10: [-0.2231,0.0974380,0.3484850],
+      cvd_30: [-0.2163,0.0944760,0.2003953],
+      asc_30: [-0.1884,0.0823060,0.1949490],
+      hf_30:  [-0.3020,0.1319130,0.2619865],
+      chd_30: [-0.1601,0.0699500,0.1560926],
+      str_30: [-0.2428,0.1060650,0.2451115]
+    }
+  };
+  const b=B[sex][o+'_'+yr];if(!b)return 0;
+  if(sdi>=7) return b[2];
+  if(sdi>=4) return b[1];
+  if(sdi===1) return b[0];
+  return 0; // deciles 2-3 = reference
+}
+
+function computeAll(sex,age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st,hba1c,uacr,sdi){
+  const fns10f={cvd:lo10f_cvd,asc:lo10f_asc,hf:lo10f_hf,chd:lo10f_chd,str:lo10f_str};
+  const fns10m={cvd:lo10m_cvd,asc:lo10m_asc,hf:lo10m_hf,chd:lo10m_chd,str:lo10m_str};
+  const fns30f={cvd:lo30f_cvd,asc:lo30f_asc,hf:lo30f_hf,chd:lo30f_chd,str:lo30f_str};
+  const fns30m={cvd:lo30m_cvd,asc:lo30m_asc,hf:lo30m_hf,chd:lo30m_chd,str:lo30m_str};
+  const f10=sex==='female'?fns10f:fns10m, f30=sex==='female'?fns30f:fns30m;
+  const r10={},r30={};
+  for(const o of['cvd','asc','hf','chd','str']){
+    let lo10,lo30;
+    if(hba1c!==null){
+      // Use full S12C/S12H standalone equations (not add-ons) — correct DM betas
+      lo10=calcHba1c10(sex,o,age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st,hba1c);
+      lo30=calcHba1c30(sex,o,age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st,hba1c);
+      // Apply UACR and SDI on top of HbA1c model
+      if(uacr!==null){lo10+=addUacr(sex,o,'10',uacr);lo30+=addUacr(sex,o,'30',uacr);}
+      if(sdi!==null){lo10+=addSdi(sex,o,'10',sdi);lo30+=addSdi(sex,o,'30',sdi);}
+    } else {
+      lo10=f10[o](age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st);
+      lo30=f30[o](age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st);
+      if(uacr!==null){lo10+=addUacr(sex,o,'10',uacr);lo30+=addUacr(sex,o,'30',uacr);}
+      if(sdi!==null){lo10+=addSdi(sex,o,'10',sdi);lo30+=addSdi(sex,o,'30',sdi);}
+    }
+    r10[o]=L(lo10);r30[o]=L(lo30);
+  }
+  return{r10,r30};
+}
+
+function riskCat(p,isA10){
+  if(isA10){if(p<5)return{cat:'low',label:'Low'};if(p<7.5)return{cat:'borderline',label:'Borderline'};if(p<10)return{cat:'intermediate',label:'Intermediate'};return{cat:'high',label:'High'};}
+  if(p<10)return{cat:'low',label:'Low'};if(p<20)return{cat:'intermediate',label:'Intermediate'};return{cat:'high',label:'High'};
+}
+function guidance10(p){
+  if(p<5)return{cat:'low',txt:'<strong>Low ASCVD risk (&lt;5%).</strong> Lifestyle optimisation. Statin generally not indicated unless LDL-C ≥190 mg/dL or other high-risk conditions present.'};
+  if(p<7.5)return{cat:'borderline',txt:'<strong>Borderline ASCVD risk (5–7.5%).</strong> Discuss risk-enhancing factors. Consider statin if enhancers present; target ≥30% LDL-C reduction.'};
+  if(p<10)return{cat:'intermediate',txt:'<strong>Intermediate ASCVD risk (7.5–10%).</strong> Moderate- to high-intensity statin recommended. Consider CAC if decision uncertain. Target LDL-C &lt;100 mg/dL.'};
+  return{cat:'high',txt:'<strong>High ASCVD risk (≥10%).</strong> High-intensity statin strongly recommended. Target ≥50% LDL-C reduction; goal LDL-C &lt;70 mg/dL.'};
+}
+function guidance30(p){
+  if(p<15)return{cat:'low',txt:'<strong>Low lifetime ASCVD risk.</strong> Use to reinforce lifestyle and motivate sustained prevention.'};
+  if(p<30)return{cat:'intermediate',txt:'<strong>Moderate lifetime ASCVD risk.</strong> Consider early intervention in patients with low short-term but meaningful long-term risk.'};
+  return{cat:'high',txt:'<strong>High lifetime ASCVD risk (≥30%).</strong> Strong rationale for preventive intervention even if 10-year risk appears low.'};
+}
+
+function renderGrid(gid,guid,res,yr){
+  const items=[{key:'asc',label:'ASCVD',pri:true},{key:'cvd',label:'Total CVD'},{key:'hf',label:'Heart Failure'},{key:'chd',label:'CHD'},{key:'str',label:'Stroke'}];
+  document.getElementById(gid).innerHTML=items.map(o=>{
+    const p=res[o.key]*100,isA10=o.pri&&yr===10,{cat,label}=riskCat(p,isA10);
+    return`<div class="metric ${cat}${o.pri?' primary':''}"><div class="m-label">${o.label}</div><div class="m-val ${cat}">${p.toFixed(1)}%</div><span class="m-badge ${cat}">${label}</span></div>`;
+  }).join('');
+  const g=yr===10?guidance10(res.asc*100):guidance30(res.asc*100);
+  document.getElementById(guid).innerHTML=`<div class="guidance ${g.cat}">${g.txt}</div>`;
+}
+
+function calc(){
+  document.getElementById('errbox').style.display='none';
+  const age=parseFloat(document.getElementById('age').value);
+  const sex=document.getElementById('sex').value;
+  const sbp=parseFloat(document.getElementById('sbp').value);
+  const tc=parseFloat(document.getElementById('tc').value);
+  const hdl=parseFloat(document.getElementById('hdl').value);
+  const egfr=parseFloat(document.getElementById('egfr').value);
+  const bmi=parseFloat(document.getElementById('bmi').value);
+  const bp=getv('grp_bp'),st=getv('grp_st'),dm=getv('grp_dm'),sm=getv('grp_sm');
+  const hba1cV=document.getElementById('hba1c').value.trim();
+  const uacrV=document.getElementById('uacr').value.trim();
+  const zipV=document.getElementById('zip').value.trim();
+  const hba1c=hba1cV?parseFloat(hba1cV):null;
+  const uacr=uacrV?parseFloat(uacrV):null;
+  const sdi=zipV?(SDI_MAP[zipV]||null):null;
+
+  const err=msg=>{const b=document.getElementById('errbox');b.textContent=msg;b.style.display='block';};
+  if(isNaN(age)||age<30||age>79){err('Age must be 30–79 years.');return;}
+  if(isNaN(sbp)||sbp<90||sbp>200){err('SBP must be 90–200 mm Hg.');return;}
+  if(isNaN(tc)||tc<100||tc>400){err('Total cholesterol must be 100–400 mg/dL.');return;}
+  if(isNaN(hdl)||hdl<20||hdl>100){err('HDL-C must be 20–100 mg/dL.');return;}
+  if(tc<=hdl){err('Total cholesterol must be greater than HDL-C.');return;}
+  if(isNaN(egfr)||egfr<15||egfr>140){err('eGFR must be 15–140 mL/min/1.73m².');return;}
+  if(isNaN(bmi)||bmi<15||bmi>60){err('BMI must be 15–60 kg/m².');return;}
+  if(zipV&&!/^\d{5}$/.test(zipV)){err('ZIP code must be 5 digits.');return;}
+
+  const{r10,r30}=computeAll(sex,age,tc,hdl,sbp,egfr,bmi,dm,sm,bp,st,hba1c,uacr,sdi);
+  renderGrid('grid10','guide10',r10,10);
+  renderGrid('grid30','guide30',r30,30);
+
+  const parts=[];
+  if(hba1c!==null)parts.push('HbA1c');
+  if(uacr!==null)parts.push('UACR');
+  if(sdi!==null)parts.push('SDI');
+  document.getElementById('model-badge').textContent=(parts.length?parts.join(' + ')+' model':'Base model')+' · offline';
+  // Update statin CTA with actual ASCVD value
+  const ascvdPct = (r10.asc*100).toFixed(1);
+  document.getElementById('statin-cta-text').textContent =
+    'ASCVD ' + ascvdPct + '% — get statin intensity & LDL-C target → Statin Chooser';
+  document.getElementById('reset-btn').style.display='block';
+  document.getElementById('results-empty').style.display='none';
+  document.getElementById('results').style.display='block';
+  showYr('10');
+}
+
+function showYr(yr){
+  ['10','30'].forEach(y=>{
+    document.getElementById('tab'+y).classList.toggle('active',y===yr);
+    document.getElementById('panel'+y).style.display=y===yr?'':'none';
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// STATIN CHOOSER — 2026 ACC/AHA Dyslipidemia Guideline
+// ═══════════════════════════════════════════════════════════════════════
+
+// Statin intensity reference table (per 2022 update, carried into 2026)
+const HIGH_STATINS = [
+  {name:'Atorvastatin 40–80 mg', preferred:true},
+  {name:'Rosuvastatin 20–40 mg', preferred:true},
+];
+const MOD_STATINS = [
+  {name:'Atorvastatin 10–20 mg', preferred:true},
+  {name:'Rosuvastatin 5–10 mg', preferred:true},
+  {name:'Simvastatin 20–40 mg'},
+  {name:'Pravastatin 40–80 mg'},
+  {name:'Lovastatin 40 mg'},
+  {name:'Fluvastatin XL 80 mg'},
+  {name:'Pitavastatin 2–4 mg'},
+];
+const LOW_STATINS = [
+  {name:'Simvastatin 10 mg'},
+  {name:'Pravastatin 10–20 mg'},
+  {name:'Lovastatin 20 mg'},
+  {name:'Fluvastatin 20–40 mg'},
+  {name:'Pitavastatin 1 mg'},
+];
+
+function drugList(drugs){
+  return '<ul class="drug-list">'+drugs.map(d=>`<li class="${d.preferred?'preferred':''}">${d.name}</li>`).join('')+'</ul>';
+}
+
+function onCategoryChange(){
+  const cat = document.getElementById('s_category').value;
+  ['primary-opts','secondary-opts','fh-opts'].forEach(id=>document.getElementById(id).style.display='none');
+  if(cat==='primary')  document.getElementById('primary-opts').style.display='block';
+  if(cat==='secondary')document.getElementById('secondary-opts').style.display='block';
+  if(cat==='fh')       document.getElementById('fh-opts').style.display='block';
+}
+
+function toggleCac(){
+  const v = getv('s_cac_avail');
+  document.getElementById('cac-field').style.display = v ? 'block':'none';
+}
+
+// Call this from PREVENT calc page when results are available
+let _preventAscvd10 = null;
+function setPREVENTResult(ascvd10){
+  _preventAscvd10 = ascvd10;
+  document.getElementById('import-banner').style.display='flex';
+}
+function importFromPREVENT(){
+  if(_preventAscvd10===null) return;
+  showPage('statin');
+  document.getElementById('s_category').value='primary';
+  onCategoryChange();
+  document.getElementById('s_ascvd').value = _preventAscvd10.toFixed(1);
+  document.getElementById('import-banner').style.display='none';
+  // Flash the field
+  const el=document.getElementById('s_ascvd');
+  el.style.borderColor='var(--harmony)';
+  el.style.boxShadow='0 0 0 3px rgba(95,205,188,.3)';
+  setTimeout(()=>{el.style.borderColor='';el.style.boxShadow='';},2000);
+}
+
+function runStatin(){
+  document.getElementById('s_errbox').style.display='none';
+  const cat = document.getElementById('s_category').value;
+  if(!cat){showErr('s_errbox','Please select a patient category.');return;}
+  const ldl = parseFloat(document.getElementById('s_ldl').value);
+  if(isNaN(ldl)||ldl<20||ldl>500){showErr('s_errbox','Please enter a valid LDL-C (20–500 mg/dL).');return;}
+
+  const onStatin  = getv('s_on_statin')===1;
+  const onEz      = getv('s_on_ez')===1;
+  const intol     = document.getElementById('s_intol').checked;
+  const preg      = document.getElementById('s_preg').checked;
+  const liver     = document.getElementById('s_liver').checked;
+  const ckd       = document.getElementById('s_ckd').checked;
+  const dialysis  = document.getElementById('s_dialysis').checked;
+  const hf3       = document.getElementById('s_hf3').checked;
+  const interact  = document.getElementById('s_interact').checked;
+
+  let html = '';
+
+  // ── HARD CONTRAINDICATIONS ───────────────────────────────────────────
+  if(preg){
+    html = renderContra('Statins contraindicated — pregnancy / lactation',
+      'All statins and most non-statin LDL-lowering therapies (ezetimibe, PCSK9 inhibitors, bempedoic acid) should be deferred during conception, pregnancy, and breastfeeding per the 2026 guideline. Consult with maternal-fetal medicine for high-risk cases (e.g., HoFH).',
+      'Defer all LLT · Lifestyle optimisation only · Reassess postpartum');
+    showRec(html, cat, ldl, null, false, null); return;
+  }
+  if(liver){
+    html = renderContra('Statins generally contraindicated — active liver disease',
+      'Statins are contraindicated with active hepatic disease or unexplained persistent transaminase elevations >3× ULN. Evaluate and treat underlying liver disease. Consider hepatology referral.',
+      'Defer statin · Treat underlying liver disease · Reassess LFTs · Consult hepatology');
+    showRec(html, cat, ldl, null, false, null); return;
+  }
+
+  // ── DIALYSIS special case ────────────────────────────────────────────
+  if(dialysis && cat==='primary'){
+    html = renderCaution('ESRD on dialysis — statin benefit uncertain (primary prevention)',
+      'RCT evidence (4D, AURORA) did not show CV benefit from statin therapy in dialysis patients without prior ASCVD. The 2026 guideline does not recommend initiating statins solely for primary prevention in patients on dialysis. Shared decision-making is appropriate.',
+      'High-intensity statin not routinely recommended · Shared decision-making · If patient has ASCVD, continue or initiate therapy');
+    showRec(html, cat, ldl, null, false, null); return;
+  }
+
+  // ── Route by category ────────────────────────────────────────────────
+  const trig = parseFloat(document.getElementById('s_trig').value)||null;
+  const ascvdForBio = (cat==='primary') ? (document.getElementById('s_ascvd').value ? parseFloat(document.getElementById('s_ascvd').value) : null) : null;
+  const dmForBio = (cat==='primary') ? (getv('s_dm')===1) : (document.getElementById('s_dm2') ? document.getElementById('s_dm2').checked : false);
+
+  if(cat==='primary')     html = primaryPrevRec(ldl, onStatin, onEz, intol, ckd, hf3, interact);
+  else if(cat==='secondary') html = secondaryPrevRec(ldl, onStatin, onEz, intol, ckd, hf3, interact);
+  else if(cat==='fh')     html = fhRec(ldl, onStatin, onEz, intol, ckd, preg, interact);
+  else if(cat==='severe') html = severeRec(ldl, onStatin, onEz, intol, ckd, interact);
+
+  showRec(html, cat, ldl, trig, dmForBio, ascvdForBio);
+}
+
+function showErr(id,msg){const b=document.getElementById(id);b.textContent=msg;b.style.display='block';}
+function showRec(html, cat, ldl, trig, dm, ascvd10){
+  document.getElementById('statin-empty').style.display='none';
+  const r=document.getElementById('statin-rec');
+  const bioHTML = renderBiomarkers(cat||'primary', ldl||100, trig, dm||false, ascvd10||null);
+  r.innerHTML = html + bioHTML;
+  r.style.display='block';
+  r.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+// ── PRIMARY PREVENTION ──────────────────────────────────────────────────────
+function primaryPrevRec(ldl, onStatin, onEz, intol, ckd, hf3, interact){
+  const ascvdV = document.getElementById('s_ascvd').value.trim();
+  const ascvd = ascvdV ? parseFloat(ascvdV) : null;
+  const dm = getv('s_dm')===1;
+  const cacAvail = getv('s_cac_avail')===1;
+  const cacV = cacAvail ? parseFloat(document.getElementById('s_cac').value||'0') : null;
+
+  let riskCategory, intensity, ldlTarget, guidance;
+
+  // LDL ≥190 — route to severe path
+  if(ldl >= 190) return severeRec(ldl, onStatin, onEz, intol, ckd, interact);
+
+  // Diabetes — special pathway
+  if(dm){
+    const risk10 = ascvd !== null ? ascvd : null;
+    const highRisk = risk10 !== null && risk10 >= 10;
+    intensity = highRisk ? 'high' : 'moderate';
+    ldlTarget = 100;
+    riskCategory = highRisk ? 'Diabetes — High Risk (PREVENT ≥10%)' : 'Diabetes — Standard';
+    guidance = highRisk
+      ? 'High-intensity statin indicated for diabetes with 10-yr ASCVD ≥10%. Target LDL-C &lt;100 mg/dL. If not at goal on max statin, add ezetimibe.'
+      : 'Moderate-intensity statin indicated for diabetes in adults 40–75 years with ≥1 risk factor. Target LDL-C &lt;100 mg/dL.';
+  }
+  // CAC-guided
+  else if(cacAvail && cacV !== null){
+    if(cacV === 0){
+      intensity = 'none';
+      ldlTarget = null;
+      riskCategory = 'Primary prevention — CAC = 0';
+      guidance = 'CAC score of 0 substantially lowers near-term ASCVD risk. Statin therapy may reasonably be withheld in the absence of diabetes, smoking, or strong family history. Reassess in 5–7 years.';
+    } else if(cacV < 100){
+      intensity = 'moderate';
+      ldlTarget = 100;
+      riskCategory = 'Primary prevention — CAC 1–99';
+      guidance = 'CAC 1–99 (below 75th percentile) supports consideration of moderate-intensity statin. Target LDL-C &lt;100 mg/dL.';
+    } else if(cacV < 300){
+      intensity = 'moderate-high';
+      ldlTarget = 70;
+      riskCategory = 'Primary prevention — CAC 100–299 or ≥75th %ile';
+      guidance = 'CAC 100–299 or ≥75th percentile for age/sex supports statin therapy with a goal of LDL-C &lt;70 mg/dL. Moderate- to high-intensity statin appropriate.';
+    } else if(cacV < 1000){
+      intensity = 'high';
+      ldlTarget = 70;
+      riskCategory = 'Primary prevention — CAC 300–999';
+      guidance = 'CAC 300–999 indicates significant subclinical atherosclerosis. High-intensity statin recommended with target LDL-C &lt;70 mg/dL.';
+    } else {
+      intensity = 'high';
+      ldlTarget = 55;
+      riskCategory = 'Primary prevention — CAC ≥1000';
+      guidance = 'CAC ≥1000 confers very high atherosclerotic burden. High-intensity statin strongly recommended with target LDL-C &lt;55 mg/dL. Consider early non-statin add-on.';
+    }
+  }
+  // PREVENT-ASCVD risk–based
+  else if(ascvd !== null){
+    if(ascvd < 3){
+      intensity = 'none';
+      ldlTarget = null;
+      riskCategory = 'Primary prevention — Low risk (&lt;3%)';
+      guidance = 'Statin therapy not routinely indicated at &lt;3% 10-yr ASCVD risk. Reinforce lifestyle. Consider CAC to further stratify if decision is uncertain.';
+    } else if(ascvd < 5){
+      intensity = 'consider-low-mod';
+      ldlTarget = 100;
+      riskCategory = 'Primary prevention — Borderline risk (3–&lt;5%)';
+      guidance = 'LDL-lowering therapy <em>may be considered</em> at borderline risk (3–&lt;5%), particularly if risk-enhancing factors are present (e.g., family history of premature ASCVD, hs-CRP ≥2 mg/L, ABI &lt;0.9, elevated Lp(a)). Use CAC to guide decision if uncertain.';
+    } else if(ascvd < 10){
+      intensity = 'moderate';
+      ldlTarget = 100;
+      riskCategory = 'Primary prevention — Intermediate risk (5–&lt;10%)';
+      guidance = 'Moderate-intensity statin <em>should be considered</em> at intermediate risk. Target LDL-C &lt;100 mg/dL. Consider CAC for men ≥40 / women ≥45 if decision uncertain. Add ezetimibe if not at goal.';
+    } else {
+      intensity = 'high';
+      ldlTarget = 70;
+      riskCategory = 'Primary prevention — High risk (≥10%)';
+      guidance = 'High-intensity statin recommended at ≥10% 10-yr ASCVD risk. Target LDL-C &lt;70 mg/dL. Add ezetimibe if LDL-C remains above goal. Consider PCSK9 inhibitor if goal not achieved on statin + ezetimibe.';
+    }
+  } else {
+    return '<div class="rec-block"><div class="rec-body"><p>Please enter a 10-yr PREVENT ASCVD risk estimate, CAC score, or both to generate a recommendation.</p></div></div>';
+  }
+
+  return buildRec('primary', riskCategory, intensity, ldlTarget, guidance, ldl, onStatin, onEz, intol, hf3, interact, ascvd);
+}
+
+// ── SECONDARY PREVENTION ────────────────────────────────────────────────────
+function secondaryPrevRec(ldl, onStatin, onEz, intol, ckd, hf3, interact){
+  const major = [
+    document.getElementById('s_acs').checked,
+    document.getElementById('s_prior_mi').checked,
+    document.getElementById('s_stroke').checked,
+    document.getElementById('s_pad').checked,
+  ];
+  const highRisk = [
+    document.getElementById('s_age65').checked,
+    document.getElementById('s_revasc').checked,
+    document.getElementById('s_smoker2').checked,
+    document.getElementById('s_dm2').checked,
+    document.getElementById('s_hf2').checked,
+    document.getElementById('s_htn2').checked,
+    document.getElementById('s_ldl100').checked,
+  ];
+  const majorCount = major.filter(Boolean).length;
+  const hrCount = highRisk.filter(Boolean).length;
+  const veryHighRisk = majorCount >= 2 || (majorCount >= 1 && hrCount >= 2);
+
+  const intensity = 'high';
+  const ldlTarget = veryHighRisk ? 55 : 70;
+  const riskCategory = veryHighRisk ? 'Secondary prevention — Very high risk' : 'Secondary prevention — Not very high risk';
+  const guidance = veryHighRisk
+    ? 'Very high risk ASCVD: high-intensity statin mandatory. Target LDL-C &lt;55 mg/dL. Add ezetimibe if LDL-C ≥55 mg/dL on maximally tolerated statin. Add PCSK9 inhibitor (evolocumab or alirocumab) if LDL-C remains ≥55 mg/dL on statin + ezetimibe.'
+    : 'Clinical ASCVD (not very high risk): high-intensity statin strongly recommended. Target LDL-C &lt;70 mg/dL. Add ezetimibe if LDL-C ≥70 mg/dL on maximally tolerated statin. Consider PCSK9 inhibitor if goal not achieved on statin + ezetimibe.';
+
+  return buildRec('secondary', riskCategory, intensity, ldlTarget, guidance, ldl, onStatin, onEz, intol, hf3, interact, null);
+}
+
+// ── FH ──────────────────────────────────────────────────────────────────────
+function fhRec(ldl, onStatin, onEz, intol, ckd, preg, interact){
+  const type = document.getElementById('s_fh_type').value;
+  const hasASCVD = getv('s_fh_ascvd')===1;
+
+  if(type==='ho'){
+    const guidance = 'HoFH requires multimodal therapy. High-intensity statin + ezetimibe as foundation. PCSK9 inhibitors, bempedoic acid, and lipoprotein apheresis (if available) should be added to approach LDL-C &lt;70 mg/dL. Refer to lipidologist. Genetic cascade screening strongly recommended for first-degree relatives.';
+    return buildRec('fh','Homozygous FH (HoFH)','high',70,guidance,ldl,onStatin,onEz,intol,false,interact,null,true);
+  }
+
+  const ldlTarget = hasASCVD ? 55 : 70;
+  const guidance = hasASCVD
+    ? 'HeFH with clinical ASCVD: high-intensity statin + ezetimibe as first-line combination. Target LDL-C &lt;55 mg/dL (very high risk). Add PCSK9 inhibitor (evolocumab or alirocumab) if LDL-C remains above goal. Genetic cascade screening recommended.'
+    : 'HeFH without clinical ASCVD: high-intensity statin + ezetimibe combination. Target ≥50% LDL-C reduction AND LDL-C &lt;100 mg/dL (&lt;70 mg/dL preferred). Add PCSK9 inhibitor if targets not achieved. Begin statin at age 8–10 years in children. Genetic cascade screening strongly recommended.';
+
+  return buildRec('fh', hasASCVD ? 'HeFH + Clinical ASCVD' : 'Heterozygous FH (HeFH)', 'high', ldlTarget, guidance, ldl, onStatin, onEz, intol, false, interact, null);
+}
+
+// ── SEVERE (LDL ≥190, no FH diagnosis) ─────────────────────────────────────
+function severeRec(ldl, onStatin, onEz, intol, ckd, interact){
+  const guidance = 'LDL-C ≥190 mg/dL (severe hypercholesterolemia): high-intensity statin as first-line. Add ezetimibe if LDL-C target (&lt;100 mg/dL, or ≥50% reduction) not achieved. Consider PCSK9 inhibitor if LDL-C remains ≥100 mg/dL on statin + ezetimibe. Evaluate for familial hypercholesterolemia (FH) — genetic testing and cascade screening recommended if untreated LDL-C ≥190 mg/dL.';
+  return buildRec('severe','Severe hypercholesterolemia (LDL-C ≥190 mg/dL)','high',100,guidance,ldl,onStatin,onEz,intol,false,interact,null);
+}
+
+// ── Render recommendation ───────────────────────────────────────────────────
+function buildRec(cat, title, intensity, ldlTarget, guidance, currentLdl, onStatin, onEz, intol, hf3, interact, ascvd, isHoFH){
+  const pbClass = {primary:'pb-primary',secondary:'pb-secondary',fh:'pb-fh',severe:'pb-severe',dm:'pb-dm'}[cat]||'pb-primary';
+  const pbLabel = {primary:'Primary Prevention',secondary:'Secondary Prevention',fh:'Familial Hypercholesterolemia',severe:'Severe Hypercholesterolemia'}[cat]||cat;
+  const intensityLabel = {high:'High-intensity statin',moderate:'Moderate-intensity statin','moderate-high':'Moderate- to high-intensity statin','consider-low-mod':'Consider low- to moderate-intensity statin',none:'Statin not routinely indicated'}[intensity]||intensity;
+  const intensityClass = {high:'intensity-high',moderate:'intensity-mod','moderate-high':'intensity-mod','consider-low-mod':'intensity-low',none:'intensity-none'}[intensity]||'intensity-none';
+
+  const atGoal = ldlTarget !== null && currentLdl < ldlTarget;
+  const percentFromGoal = ldlTarget !== null ? Math.round((currentLdl - ldlTarget) / currentLdl * 100) : null;
+
+  let drugsHTML = '';
+  if(intensity === 'none'){
+    drugsHTML = '<p style="color:var(--text3);font-style:italic">No statin currently recommended based on current risk level. Reassess annually or if risk factors change.</p>';
+  } else if(intol){
+    drugsHTML = `<p style="margin-bottom:.4rem"><strong>Statin intolerance noted.</strong> Consider:</p>
+    <ul class="drug-list">
+      <li class="preferred">Rosuvastatin 5–10 mg (best tolerated, hydrophilic)</li>
+      <li class="preferred">Pravastatin 40–80 mg (hydrophilic, fewer interactions)</li>
+      <li>Pitavastatin 2–4 mg</li>
+    </ul>
+    <p style="margin-top:.5rem;font-size:12px;color:var(--text2)">If statin-attributed muscle symptoms persist on ≥2 statins at lowest doses: <strong>ezetimibe + bempedoic acid</strong> as statin-free alternative. Add PCSK9 inhibitor if high/very-high risk and goals not met.</p>`;
+  } else if(interact){
+    drugsHTML = `<p style="margin-bottom:.4rem"><strong>Drug interaction flag.</strong> Avoid simvastatin/lovastatin with strong CYP3A4 inhibitors or cyclosporine. Avoid gemfibrozil with any statin. Preferred agents:</p>
+    <ul class="drug-list">
+      <li class="preferred">Rosuvastatin 20–40 mg (not CYP3A4-metabolised)</li>
+      <li class="preferred">Pravastatin 40–80 mg</li>
+      <li>Pitavastatin 2–4 mg</li>
+    </ul>`;
+  } else if(intensity === 'high'){
+    drugsHTML = '<p style="margin-bottom:.4rem">Preferred agents:</p>' + drugList(HIGH_STATINS) + (hf3 ? '<p style="font-size:12px;color:var(--int-text);margin-top:.4rem">⚠ HF / reduced EF: rosuvastatin preferred over atorvastatin based on CORONA/GISSI-HF data. Statins not recommended for HF as primary indication — continue if already established for ASCVD.</p>' : '');
+  } else if(intensity === 'moderate' || intensity === 'moderate-high'){
+    drugsHTML = '<p style="margin-bottom:.4rem">Preferred agents:</p>' + drugList(MOD_STATINS);
+  } else {
+    drugsHTML = '<p style="margin-bottom:.4rem">If initiating:</p>' + drugList([...LOW_STATINS, ...MOD_STATINS.slice(0,2)]);
+  }
+
+  // Escalation ladder
+  let ladderHTML = '';
+  if(intensity !== 'none'){
+    const steps = [];
+    if(!onStatin) steps.push({n:1, t: intensity==='high'?'Start high-intensity statin':'Start moderate-intensity statin', d: `Recheck lipid panel 4–12 weeks after initiation.`});
+    else if(onStatin && !atGoal) steps.push({n:1, t:'Maximise statin dose', d:`Current LDL-C ${currentLdl} mg/dL is above target of ${ldlTarget !== null ? '&lt;'+ldlTarget : 'N/A'} mg/dL. Uptitrate to maximum tolerated dose.`});
+
+    if(!onEz && ldlTarget !== null) steps.push({n:onStatin?1:2, t:'Add ezetimibe 10 mg daily', d:`If LDL-C &gt;${ldlTarget} mg/dL on maximally tolerated statin. Expect ~18–20% additional LDL-C reduction.`});
+
+    const pcsk9Thresh = (cat==='secondary' && ldlTarget<=55) ? 55 : ldlTarget;
+    if(cat!=='primary' || (ascvd!==null && ascvd>=10) || cat==='fh' || cat==='severe'){
+      steps.push({n:onStatin?onEz?3:2:3, t:'Add PCSK9 inhibitor', d:`Evolocumab 140 mg Q2W or alirocumab 75–150 mg Q2W if LDL-C &gt;${pcsk9Thresh||ldlTarget} mg/dL on statin + ezetimibe. Expect ~60% additional LDL-C reduction. Prior authorisation typically required.`});
+    }
+    if(steps.length > 0){
+      ladderHTML = `<div style="margin-top:.75rem;font-size:12.5px;font-weight:600;color:var(--text2);margin-bottom:.35rem">Escalation pathway:</div>
+      <div class="escalation-ladder">${steps.map(s=>`<div class="ladder-step"><div class="ladder-num">${s.n}</div><p><strong>${s.t}</strong> — ${s.d}</p></div>`).join('')}</div>`;
+    }
+  }
+
+  // CKD note
+  const ckdNote = document.getElementById('s_ckd').checked
+    ? `<div class="caution-box">⚠ <strong>CKD stage 3–5:</strong> Avoid simvastatin/ezetimibe combination (rosuvastatin preferred). Dose-cap simvastatin at 20 mg. If eGFR &lt;30, avoid high-dose rosuvastatin (cap at 10 mg). Statin initiation is recommended for CKD 3+ with ≥1 risk factor.</div>` : '';
+
+  const goalStatus = ldlTarget !== null
+    ? atGoal
+      ? `<div style="font-size:12px;color:var(--low-text);background:var(--low-bg);border-radius:var(--r);padding:5px 9px;margin-bottom:.5rem">✓ Current LDL-C ${currentLdl} mg/dL is <strong>at goal</strong> (&lt;${ldlTarget} mg/dL)</div>`
+      : `<div style="font-size:12px;color:var(--high-text);background:var(--high-bg);border-radius:var(--r);padding:5px 9px;margin-bottom:.5rem">↓ LDL-C needs to fall by ~${Math.max(0,currentLdl-ldlTarget)} mg/dL (~${Math.max(0,percentFromGoal)}%) to reach goal of &lt;${ldlTarget} mg/dL</div>`
+    : '';
+
+  return `
+    <div class="rec-block">
+      <div class="rec-header ${intensityClass}">
+        <span class="pathway-badge ${pbClass}" style="margin:0">${pbLabel}</span>
+        <span style="flex:1">${intensityLabel}</span>
+      </div>
+      <div class="rec-body">
+        ${ldlTarget !== null ? `<div class="ldl-target-box"><div class="ldl-target-val">&lt;${ldlTarget}</div><div class="ldl-target-label">LDL-C target<br><span style="font-size:10px">mg/dL per 2026 ACC/AHA</span></div></div>` : ''}
+        ${goalStatus}
+        <p style="margin-bottom:.6rem">${guidance}</p>
+        ${drugsHTML}
+        ${ladderHTML}
+        ${ckdNote}
+        ${isHoFH ? '<div class="caution-box">⚠ <strong>HoFH:</strong> Consider referral to lipidologist and regional lipoprotein apheresis centre. Lomitapide and evinacumab may be options in specialised centres.</div>' : ''}
+      </div>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-top:.5rem;padding:.6rem .75rem;background:#fff;border:1px solid var(--gray200);border-radius:var(--r);line-height:1.65">
+      <strong>Monitoring:</strong> Recheck fasting lipid panel 4–12 weeks after initiation or dose change, then every 6–12 months. Check CK if myopathy symptoms develop. Baseline LFTs recommended; routine monitoring only if symptomatic.
+    </div>`;
+}
+
+function renderContra(title, body, bottom){
+  return `<div class="rec-block"><div class="rec-header intensity-none">${title}</div><div class="rec-body"><p>${body}</p><div class="contra-flag">${bottom}</div></div></div>`;
+}
+function renderCaution(title, body, bottom){
+  return `<div class="rec-block"><div class="rec-header intensity-none">${title}</div><div class="rec-body"><p>${body}</p><div class="caution-box">${bottom}</div></div></div>`;
+}
+
+// Hook into PREVENT calculator — after calc() runs, expose ASCVD for import
+const _origCalc = calc;
+calc = function(){
+  _origCalc();
+  const r10 = document.getElementById('grid10');
+  if(r10 && r10.children.length > 0){
+    // Read ASCVD value from first metric tile (ASCVD is first)
+    const ascTile = r10.querySelector('.metric.primary .m-val');
+    if(ascTile){
+      const pct = parseFloat(ascTile.textContent);
+      if(!isNaN(pct)) setPREVENTResult(pct);
+    }
+  }
+};
+
+
+// ── Biomarker helpers ─────────────────────────────────────────────────────
+function toggleLpa(){
+  const v = getv('s_lpa_done');
+  document.getElementById('lpa-val-field').style.display = v ? 'block' : 'none';
+}
+
+function renderBiomarkers(cat, ldl, trig, dm, ascvd10){
+  // ── Lp(a) ────────────────────────────────────────────────────────────────
+  const lpaDone = getv('s_lpa_done') === 1;
+  const lpaVal  = parseFloat(document.getElementById('s_lpa_val').value);
+  const lpaUnit = document.getElementById('s_lpa_unit').value;
+  // Convert to nmol/L for threshold check (1 mg/dL ≈ 2.5 nmol/L)
+  const lpaNmol = lpaDone && !isNaN(lpaVal) ? (lpaUnit === 'mgdl' ? lpaVal * 2.5 : lpaVal) : null;
+  const lpaElevated = lpaNmol !== null && lpaNmol >= 125;
+  const lpaValStr = lpaDone && !isNaN(lpaVal) ? `${lpaVal} ${lpaUnit === 'nmol' ? 'nmol/L' : 'mg/dL'}` : null;
+
+  let lpaHTML = '';
+  if(!lpaDone){
+    lpaHTML = `<div class="lpa-screen">
+      <strong>🔬 Lp(a) not on file — recommend one-time screening</strong><br>
+      The 2026 ACC/AHA guideline recommends universal one-time Lp(a) measurement for all adults. Elevated Lp(a) ≥125 nmol/L (≥50 mg/dL) is an independent ASCVD risk enhancer and may shift treatment decisions. Order as part of next lipid evaluation.
+    </div>`;
+  } else if(lpaElevated){
+    lpaHTML = `<div class="lpa-elevated">
+      <strong>⚠ Lp(a) elevated — ${lpaValStr} (threshold ≥125 nmol/L / ≥50 mg/dL)</strong><br>
+      Elevated Lp(a) is an independent risk enhancer that supports more aggressive LDL-C lowering. Per 2026 ACC/AHA: if ASCVD is present and LDL-C not at goal despite max statin + ezetimibe, add PCSK9 inhibitor. For primary prevention, elevated Lp(a) supports earlier or more intensive statin therapy. No currently approved Lp(a)-specific therapy in the US — PCSK9 inhibitors reduce Lp(a) ~25%.
+    </div>`;
+  } else if(lpaNmol !== null){
+    lpaHTML = `<div class="lpa-normal">
+      <strong>✓ Lp(a) on file — ${lpaValStr} (within normal range &lt;125 nmol/L / &lt;50 mg/dL)</strong><br>
+      No additional Lp(a)-related risk modification indicated. No repeat testing required — Lp(a) is genetically determined and does not change significantly over time.
+    </div>`;
+  } else {
+    lpaHTML = `<div class="lpa-screen">
+      <strong>Lp(a) marked as on file — enter value above to interpret.</strong>
+    </div>`;
+  }
+
+  // ── ApoB ─────────────────────────────────────────────────────────────────
+  const trigVal = parseFloat(document.getElementById('s_trig').value);
+  const highTrig = !isNaN(trigVal) && trigVal >= 150;
+  const isDm = dm || document.getElementById('s_dm2') && document.getElementById('s_dm2').checked;
+  const borderlineInt = ascvd10 !== null && ascvd10 >= 3 && ascvd10 < 10;
+  const isFhOrSevere = cat === 'fh' || cat === 'severe';
+  const isSecondary = cat === 'secondary';
+  const lowLdl = ldl < 70;
+
+  // ApoB is clinically indicated when:
+  const apobIndicators = [];
+  if(highTrig) apobIndicators.push(`Triglycerides ${trigVal} mg/dL ≥150 — LDL-C may underestimate atherogenic particle burden`);
+  if(isDm) apobIndicators.push('Diabetes — ApoB more accurately reflects residual risk than LDL-C alone');
+  if(lowLdl && (isSecondary || isFhOrSevere)) apobIndicators.push(`LDL-C ${ldl} mg/dL is low but patient is high-risk — ApoB helps confirm adequate particle reduction`);
+  if(borderlineInt && !isSecondary) apobIndicators.push('Borderline/intermediate ASCVD risk — ApoB may clarify statin decision when LDL-C alone is uncertain');
+  if(isFhOrSevere) apobIndicators.push('FH / severe hypercholesterolemia — ApoB useful to confirm response to therapy');
+
+  let apobHTML = '';
+  if(apobIndicators.length > 0){
+    apobHTML = `<div class="apob-indicated">
+      <strong>🔬 ApoB measurement clinically indicated — consult cardiology</strong><br>
+      ApoB is recommended in this patient due to:<br>
+      <ul style="margin:.35rem 0 .35rem 1.1rem;font-size:12px">
+        ${apobIndicators.map(r=>`<li>${r}</li>`).join('')}
+      </ul>
+      Per Central Health protocol, ApoB should be ordered in consultation with cardiology given cost considerations. ApoB &lt;80 mg/dL is the target in high-risk patients; &lt;65 mg/dL in very high-risk. ApoB ≥80 mg/dL on statin may indicate residual risk warranting therapy intensification.
+    </div>`;
+  } else {
+    apobHTML = `<div class="apob-na">
+      ApoB not indicated at this time based on current inputs. Consider ordering if triglycerides rise ≥150 mg/dL, diabetes is diagnosed, or statin decision remains uncertain at borderline/intermediate risk.
+    </div>`;
+  }
+
+  return `<div class="biomarker-section">
+    <div class="biomarker-card" style="margin-bottom:.6rem">
+      <div class="biomarker-header">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#214C52" stroke-width="1.2"/><path d="M6.5 3.5v3.5L8.5 9" stroke="#214C52" stroke-width="1.2" stroke-linecap="round"/></svg>
+        Lp(a) — Lipoprotein(a) &nbsp;·&nbsp; <span style="font-weight:400;text-transform:none;letter-spacing:0">One-time lifetime screening · 2026 ACC/AHA</span>
+      </div>
+      <div class="biomarker-body">${lpaHTML}</div>
+    </div>
+    <div class="biomarker-card">
+      <div class="biomarker-header">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><circle cx="6.5" cy="6.5" r="5.5" stroke="#214C52" stroke-width="1.2"/><path d="M6.5 3.5v3.5L8.5 9" stroke="#214C52" stroke-width="1.2" stroke-linecap="round"/></svg>
+        ApoB — Apolipoprotein B &nbsp;·&nbsp; <span style="font-weight:400;text-transform:none;letter-spacing:0">Order via cardiology consult · Central Health protocol</span>
+      </div>
+      <div class="biomarker-body">${apobHTML}</div>
+    </div>
+  </div>`;
+}
+
+
+function resetCalc(){
+  // Reset all inputs to defaults
+  document.getElementById('age').value = '55';
+  document.getElementById('sex').value = 'female';
+  document.getElementById('sbp').value = '125';
+  document.getElementById('tc').value = '190';
+  document.getElementById('hdl').value = '50';
+  document.getElementById('egfr').value = '90';
+  document.getElementById('bmi').value = '27';
+  document.getElementById('hba1c').value = '';
+  document.getElementById('uacr').value = '';
+  document.getElementById('zip').value = '';
+  // Reset all toggles to No/default
+  ['grp_bp','grp_st','grp_dm','grp_sm'].forEach(g => {
+    document.querySelectorAll('#'+g+' .tb').forEach(b => b.classList.remove('on'));
+    document.querySelector('#'+g+' .tb[data-v="0"]').classList.add('on');
+  });
+  // Hide results
+  document.getElementById('results').style.display='none';
+  document.getElementById('results-empty').style.display='block';
+  document.getElementById('reset-btn').style.display='none';
+  document.getElementById('errbox').style.display='none';
+  // Clear PREVENT import banner on statin page
+  _preventAscvd10 = null;
+  document.getElementById('import-banner').style.display='none';
+  // Scroll back to top of inputs
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+</script>
+
+<!-- ══════════════════════ STATIN CHOOSER PAGE ══════════════════════ -->
+<div class="page" id="page-statin">
+  <div class="statin-layout" style="padding:1.5rem 1.5rem 3rem">
+
+    <div class="page-hero" style="margin-bottom:1.25rem">
+      <h2 style="font-size:22px;font-weight:700;color:var(--remedy);margin-bottom:.35rem">Statin Therapy Chooser</h2>
+      <p style="font-size:13.5px;color:var(--text2);line-height:1.65;max-width:680px">Evidence-based statin intensity, LDL-C target, and non-statin escalation pathway per the 2026 ACC/AHA/Multisociety Dyslipidemia Guideline.</p>
+    </div>
+
+    <div class="statin-grid">
+      <!-- LEFT: inputs -->
+      <div>
+        <div class="card">
+          <!-- Import banner -->
+          <div class="import-banner" id="import-banner" onclick="importFromPREVENT()" style="display:none">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M7 2v7M4 6l3 3 3-3M2 11h10" stroke="#214C52" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><strong>Import from PREVENT calculator</strong> — click to use calculated ASCVD risk</span>
+          </div>
+
+          <div class="section-label">Clinical scenario</div>
+          <div class="field" style="margin-bottom:.85rem">
+            <label>Patient category</label>
+            <select id="s_category" onchange="onCategoryChange()">
+              <option value="">— select —</option>
+              <option value="primary">Primary prevention (no known CVD)</option>
+              <option value="secondary">Secondary prevention (known clinical ASCVD)</option>
+              <option value="fh">Familial hypercholesterolemia (FH)</option>
+              <option value="severe">Severe hypercholesterolemia (LDL-C ≥190 mg/dL, no FH diagnosis)</option>
+            </select>
+          </div>
+
+          <!-- Primary prevention sub-options -->
+          <div id="primary-opts" style="display:none">
+            <div class="field" style="margin-bottom:.75rem">
+              <label>10-yr PREVENT ASCVD risk (%)</label>
+              <input type="number" id="s_ascvd" min="0" max="100" step="0.1" placeholder="e.g. 7.5">
+              <span class="hint">From PREVENT calculator above, or enter manually</span>
+            </div>
+            <div class="field" style="margin-bottom:.75rem">
+              <label>Diabetes mellitus</label>
+              <div class="toggle-group" id="s_dm"><button class="tb on" data-v="0" onclick="tog('s_dm',this)">No</button><button class="tb" data-v="1" onclick="tog('s_dm',this)">Yes</button></div>
+            </div>
+            <div class="field" style="margin-bottom:.75rem">
+              <label>CAC score available?</label>
+              <div class="toggle-group" id="s_cac_avail"><button class="tb on" data-v="0" onclick="tog('s_cac_avail',this);toggleCac()">No</button><button class="tb" data-v="1" onclick="tog('s_cac_avail',this);toggleCac()">Yes</button></div>
+            </div>
+            <div class="field" id="cac-field" style="display:none;margin-bottom:.75rem">
+              <label>CAC score (Agatston units)</label>
+              <input type="number" id="s_cac" min="0" step="1" placeholder="e.g. 150">
+            </div>
+          </div>
+
+          <!-- Secondary prevention sub-options -->
+          <div id="secondary-opts" style="display:none">
+            <div class="section-label" style="margin-top:.25rem">Very high risk features</div>
+            <p style="font-size:12px;color:var(--text2);margin-bottom:.65rem;line-height:1.6">Check all that apply. <strong>Very high risk</strong> = multiple major ASCVD events, OR 1 major event + ≥2 high-risk conditions.</p>
+            <div style="font-size:12.5px;color:var(--text2);margin-bottom:.5rem;font-weight:600">Major ASCVD events:</div>
+            <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:.75rem">
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:normal;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_acs" style="accent-color:var(--remedy);width:14px;height:14px"> ACS within past 12 months</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:normal;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_prior_mi" style="accent-color:var(--remedy);width:14px;height:14px"> Prior MI (other than recent ACS)</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:normal;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_stroke" style="accent-color:var(--remedy);width:14px;height:14px"> Prior ischemic stroke</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:normal;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_pad" style="accent-color:var(--remedy);width:14px;height:14px"> Symptomatic PAD</label>
+            </div>
+            <div style="font-size:12.5px;color:var(--text2);margin-bottom:.5rem;font-weight:600">High-risk conditions:</div>
+            <div style="display:flex;flex-direction:column;gap:5px;margin-bottom:.75rem">
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:normal;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_age65" style="accent-color:var(--remedy);width:14px;height:14px"> Age &gt;65 years</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:normal;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_revasc" style="accent-color:var(--remedy);width:14px;height:14px"> Prior coronary artery revascularization</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:normal;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_smoker2" style="accent-color:var(--remedy);width:14px;height:14px"> Current smoker</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:normal;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_dm2" style="accent-color:var(--remedy);width:14px;height:14px"> Diabetes mellitus</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:normal;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_hf2" style="accent-color:var(--remedy);width:14px;height:14px"> History of heart failure</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:normal;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_htn2" style="accent-color:var(--remedy);width:14px;height:14px"> Hypertension</label>
+              <label style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:normal;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_ldl100" style="accent-color:var(--remedy);width:14px;height:14px"> LDL-C &gt;100 mg/dL despite max statin + ezetimibe</label>
+            </div>
+          </div>
+
+          <!-- FH sub-options -->
+          <div id="fh-opts" style="display:none">
+            <div class="field" style="margin-bottom:.75rem">
+              <label>FH type</label>
+              <select id="s_fh_type">
+                <option value="he">Heterozygous FH (HeFH)</option>
+                <option value="ho">Homozygous FH (HoFH)</option>
+              </select>
+            </div>
+            <div class="field" style="margin-bottom:.75rem">
+              <label>Known clinical ASCVD?</label>
+              <div class="toggle-group" id="s_fh_ascvd"><button class="tb on" data-v="0" onclick="tog('s_fh_ascvd',this)">No</button><button class="tb" data-v="1" onclick="tog('s_fh_ascvd',this)">Yes</button></div>
+            </div>
+          </div>
+
+          <hr class="divider">
+          <div class="section-label">Lipid values</div>
+          <div class="input-grid" style="grid-template-columns:1fr 1fr;gap:10px;margin-bottom:.85rem">
+            <div class="field"><label>Current LDL-C (mg/dL)</label><input type="number" id="s_ldl" min="20" max="500" step="1" placeholder="e.g. 145"></div>
+            <div class="field"><label>Triglycerides (mg/dL) <span class="hint" style="font-weight:normal;display:inline">(optional)</span></label><input type="number" id="s_trig" min="0" max="5000" step="1" placeholder="e.g. 180"></div>
+            <div class="field"><label>On statin currently?</label>
+              <div class="toggle-group" id="s_on_statin"><button class="tb on" data-v="0" onclick="tog('s_on_statin',this)">No</button><button class="tb" data-v="1" onclick="tog('s_on_statin',this)">Yes</button></div>
+            </div>
+            <div class="field"><label>On ezetimibe?</label>
+              <div class="toggle-group" id="s_on_ez"><button class="tb on" data-v="0" onclick="tog('s_on_ez',this)">No</button><button class="tb" data-v="1" onclick="tog('s_on_ez',this)">Yes</button></div>
+            </div>
+          </div>
+
+          <div class="section-label" style="margin-top:.1rem">Lp(a) &amp; ApoB screening</div>
+          <div class="input-grid" style="grid-template-columns:1fr 1fr;gap:10px;margin-bottom:.85rem">
+            <div class="field">
+              <label>Lp(a) ever measured?</label>
+              <div class="toggle-group" id="s_lpa_done"><button class="tb on" data-v="0" onclick="tog('s_lpa_done',this);toggleLpa()">Not on file</button><button class="tb" data-v="1" onclick="tog('s_lpa_done',this);toggleLpa()">On file</button></div>
+            </div>
+            <div class="field" id="lpa-val-field" style="display:none">
+              <label>Lp(a) value</label>
+              <div style="display:flex;gap:6px;align-items:center">
+                <input type="number" id="s_lpa_val" min="0" max="500" step="1" placeholder="value" style="flex:1">
+                <select id="s_lpa_unit" style="width:90px;padding:7px 6px;border:1.5px solid var(--gray200);border-radius:var(--r);background:var(--gray50);font-size:13px;font-family:inherit">
+                  <option value="nmol">nmol/L</option>
+                  <option value="mgdl">mg/dL</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <hr class="divider">
+          <div class="section-label">Safety considerations</div>
+          <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:.85rem">
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_intol" style="accent-color:var(--remedy);width:14px;height:14px"> Statin intolerance / myopathy history</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_preg" style="accent-color:var(--remedy);width:14px;height:14px"> Pregnant, planning pregnancy, or breastfeeding</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_liver" style="accent-color:var(--remedy);width:14px;height:14px"> Active liver disease or ALT &gt;3× ULN</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_ckd" style="accent-color:var(--remedy);width:14px;height:14px"> CKD stage 3–5 (non-dialysis)</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_dialysis" style="accent-color:var(--remedy);width:14px;height:14px"> On dialysis (ESRD)</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_hf3" style="accent-color:var(--remedy);width:14px;height:14px"> NYHA class II–IV heart failure or LVEF &lt;40%</label>
+            <label style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);cursor:pointer"><input type="checkbox" id="s_interact" style="accent-color:var(--remedy);width:14px;height:14px"> Significant drug interactions (cyclosporine, gemfibrozil, strong CYP3A4 inhibitors)</label>
+          </div>
+
+          <button class="run-btn" onclick="runStatin()">Get Recommendation</button>
+          <div class="error-box" id="s_errbox"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: recommendation -->
+      <div class="statin-results-panel">
+        <div class="statin-empty" id="statin-empty">
+          <svg width="40" height="40" viewBox="0 0 40 40" fill="none"><rect x="10" y="8" width="20" height="24" rx="3" stroke="#d2dcdd" stroke-width="2"/><path d="M15 16h10M15 21h7" stroke="#d2dcdd" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <p>Select a patient category and click<br><strong>Get Recommendation</strong></p>
+        </div>
+        <div id="statin-rec" style="display:none"></div>
+      </div>
+    </div>
+
+    <div style="margin-top:1rem;font-size:11px;color:var(--text3);border-top:1px solid var(--gray200);padding-top:.75rem;max-width:900px">
+      <strong>Source:</strong> 2026 ACC/AHA/AACVPR/ABC/ACPM/ADA/AGS/APhA/ASPC/NLA/PCNA Guideline on the Management of Dyslipidemia. <em>JACC</em> / <em>Circulation</em>, March 13, 2026. doi: 10.1016/j.jacc.2025.11.016 &nbsp;·&nbsp; Clinical decision support only — does not replace clinical judgment. All calculations offline.
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
