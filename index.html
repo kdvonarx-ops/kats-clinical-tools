@@ -542,6 +542,8 @@ body.vc-open{overflow:hidden}
 @media(max-width:600px){.sc-pt{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:600px){.sc-pt b{white-space:normal}}
 
+.t-aba{--tbg:#D8D7EC;--tb:#B4B3DA;--tbd:#4D49A8;--tacc:#4D49A8;--tink:#302D68;--tsub:#434085;--tsub2:#2A285C}
+
 /* ══════════════ Perioperative tool (scoped) ══════════════ */
 #page-periop{--card:#fff;--bg:var(--gray50);--gray400:#9aa3ad;--remedy-light:#e6eced;--r:8px;--rl:12px}
 #page-periop .layout{padding:0}
@@ -680,6 +682,7 @@ body.vc-open{overflow:hidden}
     <div class="nav-links">
       <button class="nav-link active" id="nav-hub" onclick="showPage('hub')">VIBES board</button>
       <button class="nav-link" id="nav-statin" onclick="showPage('statin')">Statin Chooser</button>
+      <button class="nav-link" id="nav-periop" onclick="showPage('periop')">Preop Risk</button>
       <button class="nav-link" id="nav-about" onclick="showPage('about')">About</button>
     </div>
   </div>
@@ -799,7 +802,7 @@ body.vc-open{overflow:hidden}
       </div>
       <div class="tiles" id="tiles"></div>
       <details class="refs-board">
-        <summary>References <small>33 sources</small></summary>
+        <summary>References <small>35 sources</small></summary>
         <div class="refs-body">
           <h3>VIBES scores</h3>
           <ol>
@@ -812,15 +815,17 @@ body.vc-open{overflow:hidden}
             <li>Lip GYH, et al. Refining clinical risk stratification for predicting stroke and thromboembolism in atrial fibrillation (CHA₂DS₂-VASc). <i>Chest</i>. 2010;137:263–272.</li>
             <li>Pisters R, et al. A novel user-friendly score (HAS-BLED) to assess 1-year risk of major bleeding in patients with atrial fibrillation. <i>Chest</i>. 2010;138:1093–1100.</li>
             <li>Reddy YNV, et al. A simple, evidence-based approach to help guide diagnosis of heart failure with preserved ejection fraction (H₂FPEF). <i>Circulation</i>. 2018;138:861–870.</li>
+            <li>Reddy YNV, et al. An evidence-based screening tool for heart failure with preserved ejection fraction: the HFpEF-ABA score. <i>Nat Med</i>. 2024;30:2258–2264.</li>
             <li>Inker LA, et al. New creatinine- and cystatin C–based equations to estimate GFR without race (CKD-EPI 2021). <i>N Engl J Med</i>. 2021;385:1737–1749.</li>
             <li>Duceppe E, et al. Canadian Cardiovascular Society guidelines on perioperative cardiac risk assessment (BNP ≥92 pg/mL threshold). <i>Can J Cardiol</i>. 2017;33:17–32.</li>
           </ol>
           <h3>Guidelines</h3>
-          <ol start="12">
+          <ol start="13">
             <li>2026 ACC/AHA/Multisociety Guideline on the Management of Dyslipidemia. <i>J Am Coll Cardiol</i>. 2026. doi:10.1016/j.jacc.2025.11.016.</li>
             <li>Thompson A, et al. 2024 AHA/ACC/Multisociety guideline for perioperative cardiovascular management for noncardiac surgery. <i>Circulation</i>. 2024;150:e351–e442.</li>
             <li>Joglar JA, et al. 2023 ACC/AHA/ACCP/HRS guideline for the diagnosis and management of atrial fibrillation. <i>Circulation</i>. 2024;149:e1–e156.</li>
             <li>Heidenreich PA, et al. 2022 AHA/ACC/HFSA guideline for the management of heart failure. <i>Circulation</i>. 2022;145:e895–e1032.</li>
+            <li>Kittleson MM, Panjrath GS, et al. Management of heart failure with preserved ejection fraction: 2026 ACC Expert Consensus Decision Pathway. <i>J Am Coll Cardiol</i>. 2026. doi:10.1016/j.jacc.2026.06.018.</li>
             <li>Otto CM, et al. 2020 ACC/AHA guideline for the management of patients with valvular heart disease. <i>Circulation</i>. 2021;143:e72–e227.</li>
             <li>Douketis JD, et al. Perioperative management of antithrombotic therapy: ACCP clinical practice guideline. <i>Chest</i>. 2022;162:e207–e243.</li>
             <li>Kopp SL, et al. Regional anesthesia in the patient receiving antithrombotic or thrombolytic therapy: ASRA Pain Medicine guidelines (5th ed). <i>Reg Anesth Pain Med</i>. 2025. doi:10.1136/rapm-2024-105766.</li>
@@ -831,14 +836,14 @@ body.vc-open{overflow:hidden}
             <li>US FDA. SGLT2 inhibitor labeling (2020): hold canagliflozin, dapagliflozin, and empagliflozin ≥3 days and ertugliflozin ≥4 days before scheduled surgery.</li>
           </ol>
           <h3>Trials</h3>
-          <ol start="24">
+          <ol start="26">
             <li>Douketis JD, et al. Perioperative management of patients with atrial fibrillation receiving a direct oral anticoagulant (PAUSE). <i>JAMA Intern Med</i>. 2019;179:1469–1478.</li>
             <li>Douketis JD, et al. Perioperative bridging anticoagulation in patients with atrial fibrillation (BRIDGE). <i>N Engl J Med</i>. 2015;373:823–833.</li>
             <li>Friberg L, et al. Evaluation of risk stratification schemes for ischaemic stroke and bleeding in 182,678 patients with atrial fibrillation (Swedish AF cohort). <i>Eur Heart J</i>. 2012;33:1500–1510.</li>
             <li>Kovacs MJ, et al. Postoperative low molecular weight heparin bridging for patients at high risk of arterial thromboembolism (PERIOP2). <i>BMJ</i>. 2021;373:n1205.</li>
           </ol>
           <h3>Equations and tools</h3>
-          <ol start="27">
+          <ol start="29">
             <li>Cockcroft DW, Gault MH. Prediction of creatinine clearance from serum creatinine. <i>Nephron</i>. 1976;16:31–41.</li>
             <li>American College of Surgeons. ACS NSQIP Surgical Risk Calculator (opened in its original form; not reproduced or automated here).</li>
             <li>American Heart Association. PREVENT online calculator (used to verify this tool's PREVENT results).</li>
@@ -1184,6 +1189,7 @@ body.vc-open{overflow:hidden}
           <tr><td><strong>DASI</strong></td><td>Functional capacity (estimated peak VO₂ and METs)</td><td>12-item questionnaire validated against exercise testing (Hlatky 1989)</td><td>METS study, 1,401 patients before major surgery: DASI predicted 30-day death or MI better than subjective assessment; &gt;34 used as the adequate-capacity threshold</td></tr>
           <tr><td><strong>CHA₂DS₂-VASc</strong></td><td>Annual stroke and systemic embolism risk in AF or atrial flutter</td><td>Euro Heart Survey, 1,084 non-anticoagulated patients with nonvalvular AF (Lip 2010)</td><td>Validated in many large cohorts, including the Swedish AF cohort (182,678 patients); C-statistic ≈0.6–0.7 in most studies; best at identifying truly low-risk patients</td></tr>
           <tr><td><strong>H₂FPEF</strong></td><td>Probability of HFpEF in unexplained dyspnea with LVEF ≥50%</td><td>414 patients referred for invasive exercise testing at Mayo Clinic (Reddy 2018)</td><td>Test cohort of 100 patients; AUC 0.841 for the point score, with the continuous model performing slightly better</td></tr>
+          <tr><td><strong>HFpEF-ABA</strong></td><td>Probability of HFpEF in dyspnea, from age, BMI, and AF alone (no echo)</td><td>414 ambulatory patients with invasive hemodynamic testing at Mayo Clinic (Reddy 2024)</td><td>International cohort of 736 (AUC 0.813), unexplained-dyspnea cohort of 228 (AUC 0.840), and HF-hospitalization cohort of 456 (AUC 0.929); higher probability tracked with HF hospitalization or death in Mayo and VA cohorts</td></tr>
           <tr><td><strong>HAS-BLED</strong></td><td>1-year major bleeding risk in AF</td><td>Euro Heart Survey, 3,978 patients with AF (Pisters 2010)</td><td>Validated in anticoagulated trial and registry cohorts, where it performed as well as or better than earlier bleeding scores (HEMORR₂HAGES, ATRIA); moderate discrimination</td></tr>
         </tbody>
       </table>
@@ -1202,6 +1208,7 @@ body.vc-open{overflow:hidden}
     <div class="about-section">
       <h3>Score limitations</h3>
       <ul>
+        <li>HFpEF-ABA sets no cutoffs in its derivation paper; the low/intermediate/high bands shown (&lt;25%, 25–80%, &gt;80%) are as cited from the 2026 ACC HFpEF pathway. It is a screening estimate and does not replace echocardiography or natriuretic peptides.</li>
         <li>H₂FPEF needs echocardiographic E/e′ and PASP and applies only when LVEF is ≥50%; it was derived in a referral population, so probabilities may run higher than in primary care.</li>
         <li>Each score was derived in a specific population; performance may differ in younger patients, other health systems, or populations underrepresented in derivation cohorts.</li>
         <li>The perioperative scores predict different outcomes (RCRI: major cardiac complications; MICA: MI or cardiac arrest; AUB-HAS2: death, MI, or stroke) and should not be read as the same measurement.</li>
@@ -1246,7 +1253,7 @@ body.vc-open{overflow:hidden}
         Lip GYH, et al. CHA₂DS₂-VASc. <em>Chest.</em> 2010;137:263–272 · Pisters R, et al. HAS-BLED. <em>Chest.</em> 2010;138:1093–1100 · Friberg L, et al. Swedish AF cohort (182,678 patients). <em>Eur Heart J.</em> 2012;33:1500–1510 · Joglar JA, et al. 2023 ACC/AHA/ACCP/HRS AF guideline. <em>Circulation.</em> 2024;149:e1–e156 · Van Gelder IC, et al. 2024 ESC AF guidelines. <em>Eur Heart J.</em> 2024;45:3314–3414
         <br><br>
         <strong>Heart failure:</strong><br>
-        Reddy YNV, et al. H₂FPEF score. <em>Circulation.</em> 2018;138:861–870 · Heidenreich PA, et al. 2022 AHA/ACC/HFSA heart failure guideline. <em>Circulation.</em> 2022;145:e895–e1032
+        Reddy YNV, et al. H₂FPEF score. <em>Circulation.</em> 2018;138:861–870 · Reddy YNV, et al. HFpEF-ABA score. <em>Nat Med.</em> 2024;30:2258–2264 · Kittleson MM, et al. 2026 ACC Expert Consensus Decision Pathway on HFpEF. <em>J Am Coll Cardiol.</em> 2026 · Heidenreich PA, et al. 2022 AHA/ACC/HFSA heart failure guideline. <em>Circulation.</em> 2022;145:e895–e1032
         <br><br>
         <strong>Kidney function:</strong><br>
         Inker LA, et al. CKD-EPI 2021 equation. <em>N Engl J Med.</em> 2021;385:1737–1749 · Cockcroft DW, Gault MH. <em>Nephron.</em> 1976;16:31–41
@@ -1949,6 +1956,59 @@ Sources: Khan SS et al. Circulation 2024;149:430–449 · 2026 ACC/AHA Dyslipide
         <ol class="af-refs">
           <li>Reddy YNV, Carter RE, Obokata M, Redfield MM, Borlaug BA. A simple, evidence-based approach to help guide diagnosis of heart failure with preserved ejection fraction. <i>Circulation</i>. 2018;138:861–870.</li>
           <li>Heidenreich PA, et al. 2022 AHA/ACC/HFSA guideline for the management of heart failure. <i>Circulation</i>. 2022;145:e895–e1032.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ══════════════════════ HFpEF-ABA PAGE ══════════════════════ -->
+<div class="page" id="page-aba">
+  <div class="back-row"><button class="back-btn" type="button" onclick="showPage('hub')">← Back to VIBES board</button></div>
+  <div class="page-hero" style="margin-bottom:1rem">
+    <h2>HFpEF-ABA</h2>
+    <p>Probability of heart failure with preserved ejection fraction from three routine values: <b>A</b>ge, <b>B</b>MI, and <b>A</b>trial fibrillation. No echocardiogram needed. Every input is read from the Vitals Hub.</p>
+  </div>
+  <div class="af-layout">
+    <div>
+      <div class="card">
+        <div class="section-label">Inputs</div>
+        <table class="crit"><thead><tr><th></th><th>Variable</th><th class="pts">Weight</th></tr></thead><tbody id="abaIn"></tbody></table>
+        <div id="abaNeed" style="margin-top:.6rem"></div>
+        <div class="row-end" style="margin-top:.85rem"><button class="ghost-btn" type="button" onclick="showPage('hub')">Edit in Vitals Hub</button></div>
+      </div>
+      <div class="card">
+        <div class="section-label">When it applies</div>
+        <ul class="af-notes">
+          <li>Built to screen patients with dyspnea for HFpEF, including in primary care, before or without an echocardiogram.</li>
+          <li>Age and BMI are continuous, so the probability changes smoothly rather than in point steps.</li>
+          <li>Atrial fibrillation means any history of AF; check it in the Vitals Hub if present.</li>
+          <li>If an LVEF has been entered (on the H₂FPEF page) and is under 50%, the score is flagged, since HFpEF requires a preserved ejection fraction.</li>
+          <li>When echocardiography is available, H₂FPEF adds E/e′ and PASP and can refine the estimate.</li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div class="af-result t-aba" id="abaRes"></div>
+      <div class="card">
+        <div class="section-label">How to read the probability</div>
+        <table class="model-table">
+          <thead><tr><th>Probability</th><th>Band</th><th>Next step</th></tr></thead>
+          <tbody>
+            <tr><td>&lt;25%</td><td>Low</td><td>HFpEF less likely; consider other causes of dyspnea</td></tr>
+            <tr><td>25–80%</td><td>Intermediate</td><td>Echocardiography and natriuretic peptides; consider cardiology referral</td></tr>
+            <tr><td>&gt;80%</td><td>High</td><td>HFpEF likely; confirm with echocardiography and natriuretic peptides</td></tr>
+          </tbody>
+        </table>
+        <ul class="af-notes" style="margin-top:.75rem">
+          <li>The derivation paper reports a continuous probability and does not set cutoffs. These bands are as cited from the 2026 ACC Expert Consensus Decision Pathway on HFpEF and should be read as a guide, not a diagnosis.</li>
+          <li>Equation: y = −7.7888 + 0.0626 × age + 0.1351 × BMI + 2.0408 × AF; probability = eʸ ÷ (1 + eʸ).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="section-label">References</div>
+        <ol class="af-refs">
+          <li>Reddy YNV, Carter RE, Sundaram V, et al. An evidence-based screening tool for heart failure with preserved ejection fraction: the HFpEF-ABA score. <i>Nat Med</i>. 2024;30:2258–2264.</li>
+          <li>Kittleson MM, Panjrath GS, et al. Management of heart failure with preserved ejection fraction: 2026 ACC Expert Consensus Decision Pathway. <i>J Am Coll Cardiol</i>. 2026. doi:10.1016/j.jacc.2026.06.018.</li>
         </ol>
       </div>
     </div>
@@ -3192,7 +3252,7 @@ window.HUB=(()=>{
     const where=nd.every(n=>n.page==='hub')?' in the Vitals Hub':nd.every(n=>n.page==='h2fpef')?' · enter above':'';
     return 'Needs '+esc(nd.map(n=>lc(n.label)).join(', '))+where;};
   const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-  const NAMES={prevent:'PREVENT',statin:'Statin',rcri:'RCRI',mica:'MICA',aub:'AUB-HAS2',chads:'CHA₂DS₂-VASc',hasbled:'HAS-BLED',h2fpef:'H₂FPEF',crcl:'CrCl',periop:'Periop'};
+  const NAMES={prevent:'PREVENT',statin:'Statin',rcri:'RCRI',mica:'MICA',aub:'AUB-HAS2',chads:'CHA₂DS₂-VASc',hasbled:'HAS-BLED',h2fpef:'H₂FPEF',aba:'HFpEF-ABA',crcl:'CrCl',periop:'Periop'};
   const CALCS=[
     {key:'prevent',name:'PREVENT',page:'calc'},
     {key:'statin',name:'Statin Chooser',page:'statin'},
@@ -3203,6 +3263,7 @@ window.HUB=(()=>{
     {key:'chads',name:'CHA₂DS₂-VASc',page:'chads'},
     {key:'hasbled',name:'HAS-BLED',page:'hasbled'},
     {key:'h2fpef',name:'H₂FPEF',page:'h2fpef'},
+    {key:'aba',name:'HFpEF-ABA',page:'aba'},
   ];
   const LS='kct-calcs';
   let sel={};try{sel=JSON.parse(localStorage.getItem(LS)||'{}')||{};}catch(e){sel={};}
@@ -3387,6 +3448,16 @@ window.HUB=(()=>{
     const t=s>=6?{c:'high',t:'High',rec:'HFpEF likely'}:s>=2?{c:'borderline',t:'Intermediate',rec:'Further testing needed (exercise echo or invasive hemodynamics)'}:{c:'low',t:'Low',rec:'HFpEF unlikely; consider other causes'};
     return{score:s,prob,items:met.map(x=>x.label.split(':')[0].replace(/ \(.*\)/,'')+(x.pts>1?` (+${x.pts})`:'')),...t};
   }
+  // HFpEF-ABA (Reddy, Nat Med 2024): y = −7.78875077 + 0.06256427·age + 0.13514925·BMI + 2.04080565·AF; p = eʸ/(1+eʸ)
+  function abaScore(){
+    const age=V('age'),bmi=V('bmi'),af=C('af');
+    const y=-7.78875077116607+0.0625642747159337*age+0.135149246234458*bmi+2.04080564803471*(af?1:0);
+    const prob=100*Math.exp(y)/(1+Math.exp(y));
+    const t=prob>80?{c:'high',t:'High',rec:'HFpEF likely; confirm with echocardiography and natriuretic peptides'}
+      :prob>=25?{c:'borderline',t:'Intermediate',rec:'Further evaluation: echocardiography and natriuretic peptides; consider cardiology referral'}
+      :{c:'low',t:'Low',rec:'HFpEF less likely; consider other causes of dyspnea'};
+    return{prob,age,bmi,af,items:[`Age ${age}`,`BMI ${bmi}`,af?'Atrial fibrillation':'No AF'],...t};
+  }
   function critRows(rows,showPts){
     return rows.map(x=>`<tr class="${x.met?'met':''}"><td><span class="crit-mark" aria-label="${x.met?'Present':'Absent'}">${x.met?'✓':'–'}</span></td><td><b class="crit-k">${x.k}</b> ${esc(x.label)}<span class="crit-src">${esc(x.src)}</span></td><td class="pts">${x.met?'+'+(x.pts||1):'0'}</td></tr>`).join('');
   }
@@ -3406,6 +3477,13 @@ window.HUB=(()=>{
     setHTML('h2Need',ev.h2fpef.needs.length?`<span class="chip-label">Missing:</span> ${chips(ev.h2fpef.needs,'h2fpef')}`:'');
     const hr=ev.h2fpef.res;
     setHTML('h2Res',afResult('H₂FPEF',ev.h2fpef,9,hr?`${hr.rec}.`:'')+(hr?`<div class="prob big"><span>Continuous model probability</span><div class="bar-track"><div class="bar-fill" style="width:${hr.prob.toFixed(0)}%"></div></div><b>${hr.prob<1?'<1':hr.prob.toFixed(1)}%</b></div>`:''));
+    const ar=ev.aba.res;
+    setHTML('abaIn',`<tr class="${V('age')!==null?'met':''}"><td><span class="crit-mark">${V('age')!==null?'✓':'–'}</span></td><td><b class="crit-k">A</b> Age<span class="crit-src">${V('age')!==null?V('age')+' years':'Not entered'}</span></td><td class="pts">0.0626 / yr</td></tr>
+      <tr class="${V('bmi')!==null?'met':''}"><td><span class="crit-mark">${V('bmi')!==null?'✓':'–'}</span></td><td><b class="crit-k">B</b> Body mass index<span class="crit-src">${V('bmi')!==null?V('bmi')+' kg/m²':'Not entered'}</span></td><td class="pts">0.1351 / kg/m²</td></tr>
+      <tr class="${C('af')?'met':''}"><td><span class="crit-mark">${C('af')?'✓':'–'}</span></td><td><b class="crit-k">A</b> Atrial fibrillation<span class="crit-src">${C('af')?'Present':'Not marked'}</span></td><td class="pts">${C('af')?'+2.041':'0'}</td></tr>`);
+    setHTML('abaNeed',ev.aba.needs.length?`<span class="chip-label">Missing:</span> ${chips(ev.aba.needs)}`:'');
+    setHTML('abaRes',ar?`<div class="af-big"><span class="af-name">HFpEF-ABA</span><div class="tile-big"><span class="tile-num">${ar.prob<1?'<1':ar.prob.toFixed(0)}%</span><span class="tile-pill ${pillCls(ar.c)}">${ar.t}</span></div><span class="af-line">${ar.rec}.</span><div class="prob big"><span>Probability of HFpEF</span><div class="bar-track"><div class="bar-fill" style="width:${ar.prob.toFixed(0)}%"></div></div><b>${ar.prob<1?'<1':ar.prob.toFixed(1)}%</b></div><span class="tile-small">${esc(ar.items.join(' · '))}</span></div>`
+      :`<div class="af-big"><span class="af-name">HFpEF-ABA</span><span class="af-wait">${needText(ev.aba.needs)}</span></div>`);
     const m=ev.hasbled.res?ev.hasbled.res.mods:[];
     setHTML('hasbledMod',m.length?`<div class="mod-box"><b>Modifiable risks present</b><ul>${m.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:'<p class="tile-small">No modifiable bleeding risks marked.</p>');
   }
@@ -3446,6 +3524,9 @@ window.HUB=(()=>{
     if(V('ee')===null)h2n.push(need('ee','E/e′ (echo)',{page:'h2fpef'}));if(V('pasp')===null)h2n.push(need('pasp','PASP (echo)',{page:'h2fpef'}));
     const lvef=V('lvef');if(lvef!==null&&lvef<50)h2n.push(issue('lvef',`LVEF ${lvef}% (H₂FPEF applies when LVEF ≥50%)`,{page:'h2fpef'}));
     out.h2fpef={needs:h2n,res:h2n.length?null:h2Score()};
+    const abn=[];if(V('age')===null)abn.push(need('age','Age'));if(V('bmi')===null)abn.push(need('ht','Height and weight (or BMI)',{fields:['ht','wt','bmi']}));
+    if(lvef!==null&&lvef<50)abn.push(issue('lvef',`LVEF ${lvef}% (HFpEF-ABA applies when LVEF ≥50%)`,{page:'h2fpef'}));
+    out.aba={needs:abn,res:abn.length?null:abaScore()};
     return out;
   }
 
@@ -3500,9 +3581,10 @@ window.HUB=(()=>{
     aub:{cls:'t-aub',badge:'Periop',size:'sm',color:'#7B3FA8'},
     dasi:{cls:'t-dasi',badge:'Function',size:'sm',color:'#5C8A1A'},
     h2fpef:{cls:'t-h2fpef',badge:'HFpEF probability',size:'md',color:'#13809A'},
+    aba:{cls:'t-aba',badge:'No echo needed',size:'sm',color:'#4D49A8'},
   };
-  const ORDER=['rcri','prevent','dasi','h2fpef','statin','chads','mica','hasbled','aub'];
-  const PRESETS=[['all','All tiles',CALCS.map(c=>c.key)],['lipid','Lipid visit',['prevent','statin']],['preop','Preop clearance',['rcri','mica','aub','dasi']],['af','AF visit',['chads','hasbled']]];
+  const ORDER=['rcri','prevent','dasi','h2fpef','aba','statin','chads','mica','hasbled','aub'];
+  const PRESETS=[['all','All tiles',CALCS.map(c=>c.key)],['lipid','Lipid visit',['prevent','statin']],['preop','Preop clearance',['rcri','mica','aub','dasi']],['af','AF visit',['chads','hasbled']],['hf','HF workup',['h2fpef','aba']]];
   const pillCls=c=>c==='high'?'high':(c==='low'?'low':'mid');
   const big=(n,of,pill,pc)=>`<div class="tile-big"><span class="tile-num">${n}</span>${of?`<span class="tile-of">${of}</span>`:''}<span class="tile-pill ${pc}">${pill}</span></div>`;
   const bar=(label,v)=>`<div class="bar"><span>${label}</span><div class="bar-track"><div class="bar-fill" style="width:${Math.min(100,v/40*100).toFixed(0)}%"></div></div><b>${v.toFixed(1)}%</b></div>`;
@@ -3524,6 +3606,7 @@ window.HUB=(()=>{
     if(k==='mica')return big(`${r.mica<0.1?'<0.1':r.mica.toFixed(1)}%`,'',r.mica>=1?'Elevated':'Low',r.mica>=1?'high':'low')+`<span class="tile-line">MI or cardiac arrest within 30 days</span>${e.note?`<span class="tile-small">${e.note}</span>`:''}`;
     if(k==='aub')return big(r.aub,'/ 6',r.aubCat,r.aub>=4?'high':r.aub>=2?'mid':'low')+`<span class="tile-line">Death, MI, or stroke at 30 days</span>`;
     if(k==='h2fpef')return big(r.score,'/ 9',r.t,pillCls(r.c))+`<div class="prob"><span>Continuous model</span><div class="bar-track"><div class="bar-fill" style="width:${r.prob.toFixed(0)}%"></div></div><b>${r.prob<1?'<1':r.prob.toFixed(0)}%</b></div><span class="tile-line">${r.rec}</span><span class="tile-small">${r.items.length?esc(r.items.join(' · ')):'No criteria met'}</span>`;
+    if(k==='aba')return big(`${r.prob<1?'<1':r.prob.toFixed(0)}%`,'',r.t,pillCls(r.c))+`<div class="prob"><span>Probability</span><div class="bar-track"><div class="bar-fill" style="width:${r.prob.toFixed(0)}%"></div></div><b>${r.prob<1?'<1':r.prob.toFixed(0)}%</b></div><span class="tile-line">${r.rec}</span><span class="tile-small">${esc(r.items.join(' · '))}</span>`;
     if(k==='dasi')return big(r.dasi.toFixed(1),'',r.dasi>34?'Adequate':'Poor',r.dasi>34?'low':'high')+`<span class="tile-line">About ${r.mets.toFixed(1)} METs · 12 of 12 answered</span>`;
     return '';
   }
@@ -3547,7 +3630,7 @@ window.HUB=(()=>{
     setHTML('remixDots',inc.map(k=>`<i style="background:${TILE[k].color}"></i>`).join(''));
     const bits=CALCS.filter(c=>isOn(c.key)&&!ev[c.key].needs.length&&ev[c.key].res).map(c=>{
       const r=ev[c.key].res;
-      return c.key==='prevent'?`PREVENT ${(r.r10.asc*100).toFixed(1)}%`:c.key==='statin'?'Statin ✓':c.key==='rcri'?`RCRI ${r.rcri}`:c.key==='mica'?`MICA ${r.mica<0.1?'<0.1':r.mica.toFixed(1)}%`:c.key==='aub'?`AUB ${r.aub}`:c.key==='dasi'?`DASI ${r.dasi.toFixed(0)}`:c.key==='chads'?`CHA₂DS₂-VASc ${r.score}`:c.key==='h2fpef'?`H₂FPEF ${r.score}`:`HAS-BLED ${r.score}`;
+      return c.key==='prevent'?`PREVENT ${(r.r10.asc*100).toFixed(1)}%`:c.key==='statin'?'Statin ✓':c.key==='rcri'?`RCRI ${r.rcri}`:c.key==='mica'?`MICA ${r.mica<0.1?'<0.1':r.mica.toFixed(1)}%`:c.key==='aub'?`AUB ${r.aub}`:c.key==='dasi'?`DASI ${r.dasi.toFixed(0)}`:c.key==='chads'?`CHA₂DS₂-VASc ${r.score}`:c.key==='h2fpef'?`H₂FPEF ${r.score}`:c.key==='aba'?`ABA ${r.prob.toFixed(0)}%`:`HAS-BLED ${r.score}`;
     });
     g('hubBarTxt').textContent=bits.length?bits.join(' · '):`${ready} of ${selected} VIBES ready`;
     if(!g('vibesCheck').hidden)setHTML('vibeCard',cardHTML(ev));
@@ -3569,6 +3652,7 @@ window.HUB=(()=>{
     if(k==='rcri')return[String(r.rcri),`Class ${r.rcriClass}, ${r.rcri>=2?'elevated':'low'} · ${r.rcriLee} major cardiac complications`];
     if(k==='mica')return[`${r.mica<0.1?'<0.1':r.mica.toFixed(1)}%`,`${r.mica>=1?'Elevated':'Low'} · MI or cardiac arrest within 30 days${e.note?` (${e.note.toLowerCase()})`:''}`];
     if(k==='aub')return[String(r.aub),`${r.aubCat} · death, MI, or stroke at 30 days`];
+    if(k==='aba')return[`${r.prob<1?'<1':r.prob.toFixed(0)}%`,`${r.t} probability of HFpEF · ${r.rec} (${r.items.join(', ')})`];
     if(k==='h2fpef')return[String(r.score),`${r.t} probability of HFpEF · continuous model ${r.prob<1?'<1':r.prob.toFixed(0)}%${r.items.length?` (${r.items.join(', ')})`:''}`];
     if(k==='dasi')return[r.dasi.toFixed(1),`${r.dasi>34?'Adequate':'Poor'} functional capacity · about ${r.mets.toFixed(1)} METs`];
     return['',''];
@@ -3584,7 +3668,7 @@ window.HUB=(()=>{
     const src=['2024 AHA/ACC perioperative guideline'];
     if(inc.includes('prevent'))src.push('Khan 2024 (PREVENT)');if(inc.includes('statin'))src.push('2026 ACC/AHA dyslipidemia guideline');
     if(inc.includes('chads')||inc.includes('hasbled'))src.push('2023 ACC/AHA/ACCP/HRS AF guideline');
-    if(inc.includes('rcri'))src.push('Lee 1999 (RCRI)');if(inc.includes('mica'))src.push('Gupta 2011 (MICA)');if(inc.includes('aub'))src.push('Dakik 2020 (AUB-HAS2)');if(inc.includes('dasi'))src.push('Hlatky 1989 (DASI)');if(inc.includes('h2fpef'))src.push('Reddy 2018 (H2FPEF)');
+    if(inc.includes('rcri'))src.push('Lee 1999 (RCRI)');if(inc.includes('mica'))src.push('Gupta 2011 (MICA)');if(inc.includes('aub'))src.push('Dakik 2020 (AUB-HAS2)');if(inc.includes('dasi'))src.push('Hlatky 1989 (DASI)');if(inc.includes('h2fpef'))src.push('Reddy 2018 (H2FPEF)');if(inc.includes('aba'))src.push('Reddy 2024 (HFpEF-ABA)');
     const today=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
     return `<div class="sc-head"><div><h1>VIBE Score Card</h1><span class="sc-sub">Validated Indices for Benchmarking Evidence &amp; Scoring</span><span class="sc-meta">Clinical risk summary · Kat's Clinical Tools · ${today}</span></div><div class="sc-mark"><svg class="sc-heart" viewBox="0 0 64 58" aria-hidden="true"><path d="M32 55 C 12 42, 2 30, 2 17 C 2 8, 9 2, 17 2 C 24 2, 29 6, 32 11 C 35 6, 40 2, 47 2 C 55 2, 62 8, 62 17 C 62 30, 52 42, 32 55 Z" fill="#A3264B"/><path d="M4 30 H12 q2 -4 4 0 H19 l2 3 l3 -15 l3 20 l2 -8 H34 q3 -6 6 0 H44 q1.5 -3 3 0 H49 l1.5 2.5 l2 -10 l2 13 l1.5 -5.5 H60" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
       <div class="sc-pt">${box('Patient',[V('age')!==null&&V('age')+' y/o',sexLabel().toLowerCase()].filter(Boolean).join(' '))}${box('Blood pressure',V('sbp')!==null&&V('dbp')!==null?`${V('sbp')}/${V('dbp')} mm Hg`:'','bp')}${box('BMI',V('bmi')!==null?`${V('bmi')} kg/m²`:'','bmi')}${box('eGFR',V('egfr')!==null?`${V('egfr')} mL/min`:'','egfr')}${box('LDL-C',V('ldl')!==null?`${V('ldl')} mg/dL`:'','ldl')}${box('HDL-C',V('hdl')!==null?`${V('hdl')} mg/dL`:'','hdl')}</div>
@@ -3711,6 +3795,7 @@ window.HUB=(()=>{
       if(c.key==='aub')L.push(`- AUB-HAS2: ${r.aub} (${r.aubCat.toLowerCase()} risk)`);
       if(c.key==='chads')L.push(`- CHA2DS2-VASc: ${r.score} (${r.items.join(', ')||'no risk factors'}) — ${r.rec}`);
       if(c.key==='hasbled')L.push(`- HAS-BLED: ${r.score} (${r.t.toLowerCase()} bleeding risk${r.items.length?'; '+r.items.join(', '):''})`);
+      if(c.key==='aba')L.push(`- HFpEF-ABA: ${r.prob<1?'<1':r.prob.toFixed(0)}% probability of HFpEF (${r.t.toLowerCase()}; ${r.items.join(', ')})`);
       if(c.key==='h2fpef')L.push(`- H2FPEF: ${r.score} (${r.t.toLowerCase()} probability of HFpEF; continuous model ${r.prob<1?'<1':r.prob.toFixed(0)}%${r.items.length?'; '+r.items.join(', '):''})`);
       if(c.key==='dasi')L.push(`- DASI: ${r.dasi.toFixed(1)} (est. ${r.mets.toFixed(1)} METs; ${r.dasi>34?'adequate':'poor'} functional capacity)`);
     });
